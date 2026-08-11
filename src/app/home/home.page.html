@@ -1,0 +1,238 @@
+<ion-content class="auth-content" [fullscreen]="true">
+
+  <div class="auth-wrapper">
+
+    <!-- HEADER -->
+    <div class="auth-logo">
+
+      <div class="logo-icon">
+        <ion-icon name="compass-outline"></ion-icon>
+      </div>
+
+      <span class="logo-text">Nexus</span>
+
+      <!-- TOGGLE -->
+      <div class="auth-toggle">
+
+        <div
+          class="toggle-slider"
+          [class.register]="mode === 'register'">
+        </div>
+
+        <button
+          class="toggle-btn"
+          (click)="setMode('login')">
+          Login
+        </button>
+
+        <button
+          class="toggle-btn"
+          (click)="setMode('register')">
+          Registrar
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- LOGIN -->
+    <div
+      class="auth-form-container"
+      *ngIf="mode === 'login'">
+
+      <!-- ETAPA EMAIL -->
+      <div
+        class="form-step"
+        *ngIf="loginStep === 'email'"
+        [formGroup]="loginForm">
+
+        <div class="form-group">
+          <label>Email</label>
+
+          <ion-input
+            formControlName="email"
+            type="email"
+            placeholder="Coloque seu email"
+            class="auth-input">
+          </ion-input>
+
+          <span
+            class="error-msg"
+            *ngIf="hasError(loginForm,'email','required')">
+            Email obrigatório
+          </span>
+
+          <span
+            class="error-msg"
+            *ngIf="hasError(loginForm,'email','email')">
+            Email inválido
+          </span>
+        </div>
+
+        <button
+          class="btn-primary"
+          (click)="onLoginNext()">
+          Próximo
+        </button>
+
+      </div>
+
+      <!-- ETAPA SENHA -->
+      <div
+        class="form-step"
+        *ngIf="loginStep === 'password'"
+        [formGroup]="loginForm">
+
+        <div class="email-display">
+          <ion-icon name="mail-outline"></ion-icon>
+          <span>{{ loginForm.get('email')?.value }}</span>
+        </div>
+
+        <div class="form-group">
+          <label>Senha</label>
+
+          <ion-input
+            formControlName="password"
+            type="password"
+            placeholder="Coloque sua senha"
+            class="auth-input">
+          </ion-input>
+
+          <span
+            class="error-msg"
+            *ngIf="hasError(loginForm,'password','required')">
+            Senha obrigatória
+          </span>
+
+          <span
+            class="error-msg"
+            *ngIf="hasError(loginForm,'password','minlength')">
+            Mínimo 6 caracteres
+          </span>
+        </div>
+
+        <button
+          class="btn-primary"
+          (click)="onLoginSubmit()"
+          [disabled]="isLoading">
+
+          <ion-spinner
+            *ngIf="isLoading"
+            name="crescent">
+          </ion-spinner>
+
+          <span *ngIf="!isLoading">
+            Entrar
+          </span>
+
+        </button>
+
+        <button
+          class="btn-link"
+          (click)="loginStep = 'email'">
+          ← Voltar
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- REGISTRAR -->
+    <div
+      class="auth-form-container"
+      *ngIf="mode === 'register'"
+      [formGroup]="registerForm">
+
+      <div class="form-group">
+        <label>Nome</label>
+
+        <ion-input
+          formControlName="name"
+          type="text"
+          placeholder="Coloque seu nome"
+          class="auth-input">
+        </ion-input>
+
+        <span
+          class="error-msg"
+          *ngIf="hasError(registerForm,'name','required')">
+          Nome obrigatório
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label>Email</label>
+
+        <ion-input
+          formControlName="email"
+          type="email"
+          placeholder="Coloque seu email"
+          class="auth-input">
+        </ion-input>
+
+        <span
+          class="error-msg"
+          *ngIf="hasError(registerForm,'email','required')">
+          Email obrigatório
+        </span>
+
+        <span
+          class="error-msg"
+          *ngIf="hasError(registerForm,'email','email')">
+          Email inválido
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label>Senha</label>
+
+        <ion-input
+          formControlName="password"
+          type="password"
+          placeholder="Coloque sua senha"
+          class="auth-input">
+        </ion-input>
+
+        <span
+          class="error-msg"
+          *ngIf="hasError(registerForm,'password','required')">
+          Senha obrigatória
+        </span>
+
+        <span
+          class="error-msg"
+          *ngIf="hasError(registerForm,'password','minlength')">
+          Mínimo 6 caracteres
+        </span>
+      </div>
+
+      <button
+        class="btn-primary"
+        (click)="onRegisterSubmit()"
+        [disabled]="isLoading">
+
+        <ion-spinner
+          *ngIf="isLoading"
+          name="crescent">
+        </ion-spinner>
+
+        <span *ngIf="!isLoading">
+          Registre
+        </span>
+
+      </button>
+
+      <div class="auth-footer-link">
+
+        <span
+          (click)="setMode('login')">
+          Já possui login?
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</ion-content>

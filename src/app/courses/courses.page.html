@@ -1,0 +1,54 @@
+<ion-content [fullscreen]="true" class="course-content" *ngIf="curso">
+
+  <!-- Header com imagem e overlay -->
+  <div class="course-header" [ngClass]="curso.corTema">
+    <div class="header-top">
+      <button class="icon-btn" (click)="voltar()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+      <button class="icon-btn" (click)="salvarCurso()">
+        <ion-icon name="bookmark-outline"></ion-icon>
+      </button>
+    </div>
+    <img [src]="curso.imagem" [alt]="curso.nome" class="header-img" />
+  </div>
+
+  <!-- Corpo do card -->
+  <div class="course-body">
+
+    <h1 class="course-title">{{ curso.nome }}</h1>
+
+    <div class="course-meta">
+      <span class="course-tag">{{ curso.categoria }}</span>
+      <span class="course-rating">
+        <ion-icon name="star"></ion-icon>
+        {{ curso.nota }} ({{ curso.avaliacoes }} avaliações)
+      </span>
+    </div>
+
+    <p class="course-description">{{ curso.descricao }}</p>
+
+    <!-- Lista de aulas -->
+    <div class="lesson-list">
+      <div 
+        class="lesson-item" 
+        *ngFor="let aula of curso.aulas"
+        (click)="abrirAula(aula)"
+      >
+        <div class="lesson-icon" [class.locked]="aula.bloqueada">
+          <ion-icon [name]="aula.bloqueada ? 'lock-closed' : 'play'"></ion-icon>
+        </div>
+        <div class="lesson-info">
+          <h3>{{ aula.titulo }}</h3>
+          <p>{{ aula.capitulo }} <span class="dot">•</span> {{ aula.duracao }}</p>
+        </div>
+      </div>
+    </div>
+
+    <button class="start-course-btn" (click)="comecarCurso()">
+      Começar curso
+    </button>
+
+  </div>
+
+</ion-content>

@@ -1,0 +1,161 @@
+:host {
+  --purple: #7B2FF7;
+  --blue: #4A6CF7;
+  --gradient: linear-gradient(135deg, var(--blue), var(--purple));
+}
+
+.profile-content {
+  --background: #ffffff;
+  --padding-bottom: 100px;
+}
+
+/* ===== AVATAR TOPO ===== */
+.profile-avatar-top {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0 20px;
+
+  img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #f0f0f0;
+  }
+}
+
+/* ===== CARD ===== */
+.profile-card {
+  background: #ffffff;
+  border-radius: 28px 28px 0 0;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.06);
+  padding: 28px 24px 40px;
+  min-height: 60vh;
+}
+
+.form-group {
+  margin-bottom: 20px;
+
+  label {
+    display: block;
+    font-size: 14px;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+  }
+
+  .profile-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: #F5F5F9;
+    border-radius: 14px;
+    padding: 14px 16px;
+    font-size: 14px;
+    color: #1a1a1a;
+    box-sizing: border-box;
+
+    &::placeholder {
+      color: #c2c2c2;
+      letter-spacing: 1px;
+    }
+  }
+}
+
+/* ===== ALTERAR FOTO ===== */
+.change-photo-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 24px 0 28px;
+  cursor: pointer;
+
+  .change-photo-text {
+    color: var(--purple);
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.35;
+  }
+
+  .change-photo-avatar {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+  }
+}
+
+/* ===== BOTÃO SALVAR ===== */
+.save-button {
+  width: 100%;
+  border: none;
+  background: #BFF3F7;
+  color: #E056A0;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 14px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+
+  &:active {
+    opacity: 0.8;
+  }
+}
+
+/* ===== BOTTOM NAV (igual ao dashboard) ===== */
+.bottom-nav {
+  position: fixed;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  background: #ffffff;
+  padding: 10px 24px;
+  border-radius: 40px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  z-index: 10;
+
+  .nav-item {
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+
+    ion-icon {
+      font-size: 22px;
+      color: var(--purple);
+      opacity: 0.6;
+    }
+
+    &.active {
+      opacity: 1;
+    }
+
+    .nav-home-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 16px rgba(123, 47, 247, 0.35);
+
+      ion-icon {
+        color: #fff;
+        opacity: 1;
+        font-size: 22px;
+      }
+    }
+  }
+}

@@ -1,0 +1,62 @@
+<ion-content [fullscreen]="true" class="profile-content">
+
+  <!-- Avatar centralizado no topo -->
+  <div class="profile-avatar-top">
+    <img [src]="fotoPerfil" alt="Avatar" />
+  </div>
+
+  <!-- Card com cantos arredondados -->
+  <div class="profile-card">
+
+    <div class="form-group">
+      <label>Email</label>
+      <input 
+        type="email" 
+        [(ngModel)]="email" 
+        placeholder="seuemail@exemplo.com" 
+        class="profile-input" 
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Senha</label>
+      <input 
+        type="password" 
+        [(ngModel)]="senha" 
+        placeholder="••••••••••••" 
+        class="profile-input" 
+      />
+    </div>
+
+    <div class="change-photo-row" (click)="alterarFoto()">
+      <span class="change-photo-text">Alterar foto<br />de Perfil</span>
+      <ion-avatar class="change-photo-avatar">
+        <img [src]="fotoPerfil" alt="Avatar" />
+      </ion-avatar>
+    </div>
+
+    <button class="save-button" (click)="salvarPerfil()">
+      Salvar?
+    </button>
+
+  </div>
+
+</ion-content>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+  <button class="nav-item" (click)="irHome()">
+    <ion-icon name="home"></ion-icon>
+  </button>
+  <button class="nav-item" (click)="abrirCursos()">
+    <ion-icon name="pie-chart-outline"></ion-icon>
+  </button>
+  <button class="nav-item active" (click)="abrirPerfil()">
+    <div class="nav-home-btn">
+      <ion-icon name="time-outline"></ion-icon>
+    </div>
+  </button>
+  <button class="nav-item">
+    <ion-icon name="notifications-outline"></ion-icon>
+  </button>
+</div>

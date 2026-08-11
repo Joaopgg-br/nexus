@@ -1,0 +1,183 @@
+.splash {
+
+  --background:
+  linear-gradient(
+    160deg,
+    #4b8df8,
+    #312e81
+  );
+
+}
+
+
+.splash-container {
+
+  height:100%;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+  color:white;
+
+}
+
+
+.logo-animation {
+
+  animation:
+  logoEnter 1.8s ease forwards;
+
+}
+
+
+.logo-icon {
+
+  width:120px;
+  height:120px;
+
+  border-radius:50%;
+
+  background:white;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  box-shadow:
+  0 20px 50px rgba(0,0,0,.35);
+
+}
+
+
+.logo-icon ion-icon {
+
+  color:#312e81;
+
+  font-size:70px;
+
+}
+
+
+h1 {
+
+  margin-top:25px;
+
+  font-size:35px;
+
+  opacity:0;
+
+  animation:
+  textShow 1s ease forwards;
+
+  animation-delay:.8s;
+
+}
+
+
+p {
+
+ opacity:0;
+
+ animation:
+ textShow 1s ease forwards;
+
+ animation-delay:1s;
+
+}
+
+
+.loading {
+
+ margin-top:30px;
+
+ display:flex;
+ gap:8px;
+
+}
+
+
+.loading span {
+
+ width:8px;
+ height:8px;
+
+ background:white;
+
+ border-radius:50%;
+
+ animation:
+ dots .8s infinite alternate;
+
+}
+
+
+.loading span:nth-child(2){
+
+ animation-delay:.2s;
+
+}
+
+
+.loading span:nth-child(3){
+
+ animation-delay:.4s;
+
+}
+
+
+
+@keyframes logoEnter {
+
+
+0%{
+
+ transform:
+ scale(.2)
+ rotate(-180deg);
+
+ opacity:0;
+
+}
+
+
+100%{
+
+ transform:
+ scale(1)
+ rotate(0);
+
+ opacity:1;
+
+}
+
+
+}
+
+
+
+@keyframes textShow {
+
+
+to{
+
+ opacity:1;
+
+}
+
+}
+
+
+
+@keyframes dots {
+
+
+to{
+
+ transform:translateY(-10px);
+
+}
+
+
+}

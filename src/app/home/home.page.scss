@@ -1,0 +1,330 @@
+/* =========================
+   BACKGROUND
+========================= */
+
+ion-content {
+  --background: #ffffff;
+}
+
+.auth-content {
+  font-family: 'Inter', sans-serif;
+}
+
+.auth-wrapper {
+  min-height: 100vh;
+  background: #fff;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.auth-logo {
+  position: relative;
+
+  height: 280px;
+
+  background: linear-gradient(
+    135deg,
+    #15c4f4 0%,
+    #6e42ff 100%
+  );
+
+  border-radius: 0 0 50px 50px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding-top: 28px;
+
+  overflow: visible;
+}
+
+.logo-icon {
+  width: 64px;
+  height: 64px;
+
+  border-radius: 50%;
+  background: #fff;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: 0 4px 14px rgba(0,0,0,.15);
+}
+
+.logo-icon ion-icon {
+  font-size: 30px;
+  color: #6e42ff;
+}
+
+.logo-text {
+  margin-top: 10px;
+
+  font-size: 28px;
+  font-family: 'Playfair Display', serif;
+  font-weight: 400;
+
+  color: rgba(255,255,255,.55);
+}
+
+/* =========================
+   TOGGLE
+========================= */
+
+.auth-toggle {
+  position: absolute;
+
+  left: 50%;
+  bottom: 40px;
+
+  transform: translateX(-50%);
+
+  width: 78%;
+  max-width: 320px;
+  height: 56px;
+
+  background: rgba(255,255,255,.15);
+
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+
+  border-radius: 999px;
+
+  display: flex;
+
+  overflow: hidden;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,.15);
+}
+
+.toggle-slider {
+  position: absolute;
+
+  top: 4px;
+  left: 4px;
+
+  width: calc(50% - 4px);
+  height: calc(100% - 8px);
+
+  border-radius: 999px;
+
+  background: #fff;
+
+  transition: .35s ease;
+}
+
+.toggle-slider.register {
+  transform: translateX(100%);
+
+  background: linear-gradient(
+    90deg,
+    #15c4f4,
+    #6e42ff
+  );
+}
+
+.toggle-btn {
+  flex: 1;
+
+  border: none;
+  background: transparent;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  color: white;
+
+  z-index: 2;
+
+  cursor: pointer;
+}
+
+.auth-toggle:has(.toggle-slider:not(.register))
+.toggle-btn:first-of-type {
+  color: #5b34f6;
+}
+
+/* =========================
+   FORMULÁRIO
+========================= */
+
+.auth-form-container {
+  padding: 90px 32px 32px;
+}
+
+.form-group {
+  margin-bottom: 22px;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  color: #4d4d4d;
+}
+
+.auth-input {
+  --background: #f5f5f7;
+  --padding-start: 18px;
+  --padding-end: 18px;
+
+  --placeholder-color: #b5b5bd;
+  --placeholder-opacity: 1;
+
+  --color: #555;
+
+  min-height: 56px;
+
+  border-radius: 14px;
+}
+
+.auth-input::part(native) {
+  border-radius: 14px;
+}
+
+/* =========================
+   BOTÃO
+========================= */
+
+.btn-primary {
+  width: 100%;
+  height: 56px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: linear-gradient(
+    90deg,
+    #15c4f4 0%,
+    #6e42ff 100%
+  );
+
+  color: white;
+
+  font-size: 18px;
+  font-weight: 600;
+
+  margin-top: 15px;
+
+  box-shadow: 0 10px 25px rgba(110,66,255,.25);
+
+  cursor: pointer;
+}
+
+/* =========================
+   LOGIN CARD
+========================= */
+
+.auth-footer-link {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.auth-footer-link::before {
+  content: "OR";
+
+  display: block;
+
+  margin-bottom: 15px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  color: #999;
+}
+
+.auth-footer-link span {
+  display: inline-block;
+
+  background: white;
+
+  padding: 15px 40px;
+
+  border-radius: 16px;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  color: #111;
+
+  cursor: pointer;
+
+  box-shadow: 0 4px 14px rgba(0,0,0,.08);
+}
+
+/* =========================
+   VOLTAR
+========================= */
+
+.btn-link {
+  background: transparent;
+  border: none;
+
+  margin-top: 18px;
+
+  color: #6e42ff;
+
+  font-size: 15px;
+
+  cursor: pointer;
+}
+
+/* =========================
+   EMAIL DISPLAY
+========================= */
+
+.email-display {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: #f5f5f7;
+
+  padding: 14px 16px;
+
+  border-radius: 12px;
+
+  margin-bottom: 20px;
+}
+
+/* =========================
+   ERROS
+========================= */
+
+.error-msg {
+  display: block;
+
+  margin-top: 6px;
+
+  color: #ff4d4d;
+
+  font-size: 13px;
+}
+
+.input-error {
+  border: 1px solid #ff4d4d;
+  border-radius: 14px;
+}
+
+/* =========================
+   ANIMAÇÃO
+========================= */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

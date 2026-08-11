@@ -1,0 +1,137 @@
+<ion-content [fullscreen]="true" 
+             [scrollY]="true" 
+             [scrollX]="false"
+             class="dashboard-content">
+
+  <!-- Header / Saudação -->
+  <div class="dashboard-header">
+    <div class="greeting">
+      <h2 class="greeting-text">Olá 👋</h2>
+      <h1 class="greeting-name">Aluno</h1>
+    </div>
+    <div class="avatar">
+      <img src="assets/perfil.png" alt="Avatar" />
+    </div>
+  </div>
+
+  <!-- Carrossel infinito de parceiros -->
+  <div class="partners-wrapper">
+    <div class="partners-track">
+      <!-- Duplicado para loop infinito -->
+      <img src="assets/microsoft.png" alt="Microsoft" />
+      <img src="assets/google.png" alt="Google" />
+      <img src="assets/adobe.png" alt="Adobe" />
+      <img src="assets/senai.png" alt="SENAI" />
+      <img src="assets/sesi.jpg" alt="SESI" />
+      <!-- Cópia para loop contínuo -->
+      <img src="assets/microsoft.png" alt="Microsoft" />
+      <img src="assets/google.png" alt="Google" />
+      <img src="assets/adobe.png" alt="Adobe" />
+      <img src="assets/senai.png" alt="SENAI" />
+      <img src="assets/sesi.jpg" alt="SESI" />
+    </div>
+  </div>
+
+  <!-- Scroll horizontal de cursos -->
+  <div class="courses-section">
+ <div class="courses-scroll" #coursesScroll
+     (touchstart)="$event.stopPropagation()"
+     (mousedown)="$event.stopPropagation()">
+    <!-- cards aqui -->
+      <ion-card class="course-card" (click)="abrirCursos()">
+        <div class="course-thumbnail thumb-orange">
+          <img src="assets/design.jpg" alt="Design" />
+          <div class="course-duration">18 Min</div>
+        </div>
+        <ion-card-content>
+          <p class="course-category">Designs</p>
+          <h3 class="course-title">Aprenda a Fazer Designs</h3>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="course-card" (click)="abrirCursos()">
+        <div class="course-thumbnail thumb-blue">
+          <img src="assets/programacao.jpg" alt="Programação" />
+        </div>
+        <ion-card-content>
+          <p class="course-category">Programação</p>
+          <h3 class="course-title">Melhore seu Conhecimento</h3>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="course-card" (click)="abrirCursos()">
+        <div class="course-thumbnail thumb-yellow">
+          <img src="assets/javascript.png" alt="JavaScript" />
+        </div>
+        <ion-card-content>
+          <p class="course-category">Java Script</p>
+          <h3 class="course-title">Melhore seu Front</h3>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="course-card" (click)="abrirCursos()">
+        <div class="course-thumbnail thumb-purple">
+          <img src="assets/php.png" alt="PHP" />
+        </div>
+        <ion-card-content>
+          <p class="course-category">Php</p>
+          <h3 class="course-title">Aprenda PHP</h3>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="course-card" (click)="abrirCursos()">
+        <div class="course-thumbnail thumb-dark">
+          <img src="assets/java.png" alt="Java" />
+        </div>
+        <ion-card-content>
+          <p class="course-category">JAVA</p>
+          <h3 class="course-title">Aprenda Java</h3>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="course-card" (click)="abrirCursos()">
+        <div class="course-thumbnail thumb-teal">
+          <img src="assets/python.png" alt="Python" />
+        </div>
+        <ion-card-content>
+          <p class="course-category">Python</p>
+          <h3 class="course-title">Aprenda Python</h3>
+        </ion-card-content>
+      </ion-card>
+
+    </div>
+  </div>
+
+  <!-- Barra de Pesquisa -->
+  <div class="search-section">
+  <div class="search-bar">
+    <ion-icon name="search-outline" class="search-icon"></ion-icon>
+    <input 
+      type="text" 
+      placeholder="Search Topic here" 
+      class="search-input"
+      [(ngModel)]="termoBusca"
+      (keyup.enter)="abrirCursos()"
+    />
+  </div>
+</div>
+
+</ion-content>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+  <button class="nav-item active" (click)="irHome()">
+    <div class="nav-home-btn">
+      <ion-icon name="home"></ion-icon>
+    </div>
+  </button>
+  <button class="nav-item" (click)="abrirCursos()">
+    <ion-icon name="pie-chart-outline"></ion-icon>
+  </button>
+  <button class="nav-item" (click)="abrirPerfil()">
+    <ion-icon name="time-outline"></ion-icon>
+  </button>
+  <button class="nav-item">
+    <ion-icon name="notifications-outline"></ion-icon>
+  </button>
+</div>
