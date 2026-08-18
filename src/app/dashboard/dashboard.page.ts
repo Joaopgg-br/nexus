@@ -1,51 +1,56 @@
-import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+
+interface CursoResumo {
+  id: number;
+  titulo: string;
+  categoria: string;
+  imagem: string;
+  duracao?: string;
+  corThumb: string;
+}
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
-  standalone: false
+  standalone: false,
 })
-export class DashboardPage implements AfterViewInit {
-
-  @ViewChild('coursesScroll') coursesScroll!: ElementRef;
+export class DashboardPage {
 
   termoBusca: string = '';
 
+  cursos: CursoResumo[] = [
+    {
+      id: 1,
+      titulo: 'Introduction to Cybersecurity',
+      categoria: 'Cybersecurity',
+      imagem: 'assets/ciber.jpg',
+      duracao: '6h',
+      corThumb: 'thumb-cyber',
+    }
+  ];
+
   constructor(private router: Router) {}
 
-  ngAfterViewInit() {
-    const el = this.coursesScroll?.nativeElement;
-    if (!el) return;
-
-    // Drag com mouse (desktop)
-    let isDown = false;
-    let startX: number;
-    let scrollLeft: number;
-
-    el.addEventListener('mousedown', (e: MouseEvent) => {
-      isDown = true;
-      startX = e.pageX - el.offsetLeft;
-      scrollLeft = el.scrollLeft;
-    });
-    el.addEventListener('mouseleave', () => isDown = false);
-    el.addEventListener('mouseup', () => isDown = false);
-    el.addEventListener('mousemove', (e: MouseEvent) => {
-      if (!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - el.offsetLeft;
-      el.scrollLeft = scrollLeft - (x - startX);
-    });
+  get cursosFiltrados(): CursoResumo[] {
+    if (!this.termoBusca.trim()) return this.cursos;
+    const termo = this.termoBusca.toLowerCase();
+    return this.cursos.filter(c =>
+      c.titulo.toLowerCase().includes(termo) ||
+      c.categoria.toLowerCase().includes(termo)
+    );
   }
 
-  irHome() { this.router.navigate(['/dashboard']); }
-
-  abrirCursos() {
-    this.router.navigate(['/courses'], {
-      queryParams: { busca: this.termoBusca || '' }
-    });
+  abrirCurso(id: number) {
+    this.router.navigate(['/courses']);
   }
 
-  abrirPerfil() { this.router.navigate(['/profile']); }
+  irHome() {
+    this.router.navigate(['/dashboard']);
+  }
+
+  abrirPerfil() {
+    this.router.navigate(['/perfil']);
+  }
 }
