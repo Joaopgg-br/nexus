@@ -231,3 +231,82 @@
     transform: scale(0.98);
   }
 }
+.quiz-final-card {
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+
+  margin-top: 20px;
+  padding: 18px 20px;
+
+  background: #ffffff;
+
+  border: 2px solid #2563eb;
+
+  border-radius: 16px;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.quiz-final-card:hover {
+  transform: translateY(-2px);
+
+  background: #eff6ff;
+
+  box-shadow:
+    0 8px 25px
+    rgba(37, 99, 235, 0.12);
+}
+
+.quiz-final-icon {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 12px;
+
+  background: #2563eb;
+
+  color: #ffffff;
+}
+
+.quiz-final-icon ion-icon {
+  font-size: 25px;
+}
+
+.quiz-final-info {
+  flex: 1;
+}
+
+.quiz-final-info h3 {
+  margin: 0 0 5px;
+
+  color: #0f172a;
+
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.quiz-final-info p {
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 13px;
+}
+
+.quiz-arrow {
+  font-size: 22px;
+  color: #2563eb;
+}

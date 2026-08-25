@@ -1,0 +1,144 @@
+.lesson-content {
+  --background: #f4f6fb;
+}
+
+.lesson-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+
+  .icon-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #f4f6fb;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    ion-icon {
+      font-size: 18px;
+      color: #1f2937;
+    }
+  }
+
+  .course-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #6b7280;
+  }
+}
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; // 16:9
+  background: #000;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+}
+
+.lesson-body {
+  padding: 24px 20px 40px;
+  background: #fff;
+}
+
+.lesson-chapter {
+  font-size: 12px;
+  font-weight: 600;
+  color: #4338ca;
+  text-transform: uppercase;
+  margin: 0 0 8px;
+
+  .dot {
+    margin: 0 6px;
+    color: #d1d5db;
+  }
+}
+
+.lesson-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #111827;
+  margin: 0 0 16px;
+}
+
+.lesson-text {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: #4b5563;
+  margin-bottom: 32px;
+}
+
+.lesson-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+
+  .nav-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px;
+    border-radius: 14px;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+
+    &.secondary {
+      background: #f4f6fb;
+      color: #374151;
+    }
+
+    &:disabled {
+      opacity: 0.4;
+    }
+  }
+}
+
+.complete-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #4338ca, #2563eb);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+
+  ion-icon {
+    font-size: 20px;
+  }
+}
+
+.lesson-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 40px;
+  text-align: center;
+  color: #6b7280;
+}

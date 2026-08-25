@@ -328,3 +328,15 @@ ion-content {
     transform: translateY(0);
   }
 }
+.supabase-error {
+  margin: 15px 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+
+  background: #fee2e2;
+  color: #b91c1c;
+
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: center;
+}

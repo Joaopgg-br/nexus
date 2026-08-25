@@ -46,6 +46,13 @@ loadChildren:()=>import('./courses/courses.module')
 .then(m=>m.CoursesPageModule)
 
 },
+{
+  path: 'quiz',
+  loadChildren: () =>
+    import('./quiz/quiz.module').then(
+      m => m.QuizPageModule
+    )
+},
 
 
 
@@ -54,7 +61,16 @@ path:'profile',
 loadChildren:()=>import('./profile/profile.module')
 .then(m=>m.ProfilePageModule)
 
-}
+},
+  {
+    path: 'lesson',
+    loadChildren: () => import('./lesson/lesson.module').then( m => m.LessonPageModule)
+  },
+  {
+    path: 'quiz',
+    loadChildren: () => import('./quiz/quiz.module').then( m => m.QuizPageModule)
+  }
+
 
 
 

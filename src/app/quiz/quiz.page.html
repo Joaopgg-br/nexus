@@ -1,0 +1,324 @@
+<ion-header [translucent]="true">
+
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+
+      <ion-button
+        (click)="voltarCurso()"
+      >
+        <ion-icon
+          name="arrow-back-outline"
+        ></ion-icon>
+      </ion-button>
+
+    </ion-buttons>
+
+    <ion-title>
+      Quiz Final
+    </ion-title>
+
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content
+  [fullscreen]="true"
+  class="quiz-content"
+>
+
+
+  <!-- ========================= -->
+  <!-- QUIZ -->
+  <!-- ========================= -->
+
+  <div
+    class="quiz-container"
+    *ngIf="!quizFinalizado && perguntas.length > 0"
+  >
+
+
+    <!-- Cabeçalho -->
+
+    <div class="quiz-header">
+
+      <span class="quiz-label">
+        AVALIAÇÃO FINAL
+      </span>
+
+      <h1>
+        Quiz de Cibersegurança
+      </h1>
+
+      <p>
+        Responda às perguntas para concluir o curso.
+      </p>
+
+    </div>
+
+
+    <!-- Progresso -->
+
+    <div class="progress-section">
+
+      <div class="progress-info">
+
+        <span>
+          Questão {{ perguntaAtual + 1 }}
+          de {{ perguntas.length }}
+        </span>
+
+        <span>
+          {{ ((perguntaAtual + 1) / perguntas.length * 100) | number:'1.0-0' }}%
+        </span>
+
+      </div>
+
+      <div class="progress-bar">
+
+        <div
+          class="progress-fill"
+          [style.width.%]="
+            ((perguntaAtual + 1) / perguntas.length) * 100
+          "
+        ></div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Pergunta -->
+
+    <div class="question-card">
+
+      <div class="question-number">
+
+        {{ perguntaAtual + 1 }}
+
+      </div>
+
+      <h2>
+
+        {{ perguntas[perguntaAtual].pergunta }}
+
+      </h2>
+
+
+      <!-- Alternativas -->
+
+      <div class="options">
+
+        <button
+          class="option"
+          *ngFor="
+            let opcao of perguntas[perguntaAtual].opcoes;
+            let i = index
+          "
+          [class.selected]="
+            respostaSelecionada === i
+          "
+          (click)="selecionarResposta(i)"
+        >
+
+          <span class="option-letter">
+
+            {{ ['A', 'B', 'C', 'D'][i] }}
+
+          </span>
+
+          <span class="option-text">
+
+            {{ opcao }}
+
+          </span>
+
+          <ion-icon
+            *ngIf="respostaSelecionada === i"
+            name="checkmark-circle"
+          ></ion-icon>
+
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- Navegação -->
+
+    <div class="navigation-buttons">
+
+      <ion-button
+        fill="outline"
+        class="previous-button"
+        (click)="perguntaAnterior()"
+        [disabled]="perguntaAtual === 0"
+      >
+
+        <ion-icon
+          name="arrow-back-outline"
+          slot="start"
+        ></ion-icon>
+
+        Anterior
+
+      </ion-button>
+
+
+      <ion-button
+        class="next-button"
+        (click)="proximaPergunta()"
+        [disabled]="respostaSelecionada === null"
+      >
+
+        {{
+          perguntaAtual === perguntas.length - 1
+            ? 'Finalizar quiz'
+            : 'Próxima'
+        }}
+
+        <ion-icon
+          name="arrow-forward-outline"
+          slot="end"
+        ></ion-icon>
+
+      </ion-button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================= -->
+  <!-- RESULTADO -->
+  <!-- ========================= -->
+
+  <div
+    class="result-container"
+    *ngIf="quizFinalizado"
+  >
+
+    <div
+      class="result-icon"
+      [class.approved]="nota >= 70"
+      [class.failed]="nota < 70"
+    >
+
+      <ion-icon
+        [name]="
+          nota >= 70
+            ? 'trophy-outline'
+            : 'refresh-outline'
+        "
+      ></ion-icon>
+
+    </div>
+
+
+    <span class="result-label">
+      QUIZ FINALIZADO
+    </span>
+
+
+    <h1>
+
+      {{ nota }}%
+
+    </h1>
+
+
+    <h2>
+
+      {{ getMensagemResultado() }}
+
+    </h2>
+
+
+    <p>
+
+      Você acertou
+      <strong>{{ acertos }}</strong>
+      de
+      <strong>{{ perguntas.length }}</strong>
+      questões.
+
+    </p>
+
+
+    <!-- Status -->
+
+    <div
+      class="status-card"
+      [class.approved]="nota >= 70"
+      [class.failed]="nota < 70"
+    >
+
+      <ion-icon
+        [name]="
+          nota >= 70
+            ? 'checkmark-circle'
+            : 'close-circle'
+        "
+      ></ion-icon>
+
+      <div>
+
+        <strong>
+
+          {{
+            nota >= 70
+              ? 'APROVADO'
+              : 'NÃO APROVADO'
+          }}
+
+        </strong>
+
+        <span>
+
+          Nota mínima: 70%
+
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- Botões -->
+
+    <div class="result-buttons">
+
+      <ion-button
+        expand="block"
+        class="retry-button"
+        (click)="refazerQuiz()"
+      >
+
+        <ion-icon
+          name="refresh-outline"
+          slot="start"
+        ></ion-icon>
+
+        Refazer quiz
+
+      </ion-button>
+
+
+      <ion-button
+        expand="block"
+        fill="outline"
+        class="course-button"
+        (click)="voltarCurso()"
+      >
+
+        Voltar para o curso
+
+      </ion-button>
+
+    </div>
+
+  </div>
+
+</ion-content>

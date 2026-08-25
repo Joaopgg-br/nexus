@@ -1,0 +1,63 @@
+<ion-content [fullscreen]="true" class="lesson-content" *ngIf="aula">
+
+  <div class="lesson-header">
+    <button class="icon-btn" (click)="voltar()">
+      <ion-icon name="arrow-back"></ion-icon>
+    </button>
+    <span class="course-name">{{ cursoNome }}</span>
+  </div>
+
+  <!-- Vídeo -->
+  <div class="video-wrapper">
+    <iframe
+      [src]="videoSeguro"
+      frameborder="0"
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+  </div>
+
+  <!-- Corpo -->
+  <div class="lesson-body">
+
+    <p class="lesson-chapter">{{ aula.capitulo }} <span class="dot">•</span> {{ aula.duracao }}</p>
+    <h1 class="lesson-title">{{ aula.titulo }}</h1>
+
+    <div class="lesson-text">
+      <p>{{ aula.textoConteudo }}</p>
+    </div>
+
+    <!-- Navegação entre aulas -->
+    <div class="lesson-nav">
+      <button
+        class="nav-btn secondary"
+        [disabled]="!temAulaAnterior()"
+        (click)="aulaAnterior()"
+      >
+        <ion-icon name="chevron-back-outline"></ion-icon>
+        Anterior
+      </button>
+
+      <button
+        class="nav-btn secondary"
+        [disabled]="!temProximaAula()"
+        (click)="proximaAula()"
+      >
+        Próxima
+        <ion-icon name="chevron-forward-outline"></ion-icon>
+      </button>
+    </div>
+
+    <button class="complete-btn" (click)="marcarConcluida()">
+      <ion-icon name="checkmark-circle-outline"></ion-icon>
+      Marcar como concluída
+    </button>
+
+  </div>
+
+</ion-content>
+
+<ion-content *ngIf="!aula" class="lesson-content lesson-empty">
+  <p>Aula não encontrada.</p>
+  <button class="nav-btn secondary" (click)="voltar()">Voltar ao curso</button>
+</ion-content>

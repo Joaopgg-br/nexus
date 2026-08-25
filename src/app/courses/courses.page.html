@@ -1,7 +1,7 @@
 <ion-content [fullscreen]="true" class="course-content">
 
   <!-- Header com imagem e overlay -->
-  <div class="course-header tema-azul">
+  <div class="course-header" [ngClass]="curso.corTema">
     <div class="header-top">
       <button class="icon-btn" (click)="voltar()">
         <ion-icon name="arrow-back"></ion-icon>
@@ -10,100 +10,94 @@
         <ion-icon name="bookmark-outline"></ion-icon>
       </button>
     </div>
-    <img src="assets/ciber.jpg" alt="Introduction to Cybersecurity" class="header-img" />
+    <img [src]="curso.imagem" [alt]="curso.nome" class="header-img" />
   </div>
 
   <!-- Corpo do card -->
   <div class="course-body">
 
-    <h1 class="course-title">Introduction to Cybersecurity</h1>
+    <h1 class="course-title">{{ curso.nome }}</h1>
 
     <div class="course-meta">
-      <span class="course-tag">Cybersecurity</span>
+      <span class="course-tag">{{ curso.categoria }}</span>
       <span class="course-rating">
         <ion-icon name="star"></ion-icon>
-        4.8 (10.142.339 avaliações)
+        {{ curso.nota }} ({{ curso.avaliacoes }} avaliações)
       </span>
     </div>
 
-    <p class="course-description">
-      Explore o empolgante campo da cibersegurança e entenda por que ela é uma carreira à prova de futuro.
-    </p>
+    <p class="course-description">{{ curso.descricao }}</p>
 
     <!-- Chips de informações rápidas -->
     <div class="course-info-chips">
       <div class="info-chip">
-        <ion-icon name="lock-open-outline"></ion-icon>
-        <span>Grátis</span>
+        <ion-icon [name]="curso.gratis ? 'lock-open-outline' : 'lock-closed-outline'"></ion-icon>
+        <span>{{ curso.gratis ? 'Grátis' : 'Pago' }}</span>
       </div>
       <div class="info-chip">
         <ion-icon name="time-outline"></ion-icon>
-        <span>6 Horas</span>
+        <span>{{ curso.cargaHoraria }}</span>
       </div>
       <div class="info-chip">
         <ion-icon name="bar-chart-outline"></ion-icon>
-        <span>Iniciante</span>
+        <span>{{ curso.nivel }}</span>
       </div>
       <div class="info-chip">
         <ion-icon name="flask-outline"></ion-icon>
-        <span>7 Laboratórios</span>
+        <span>{{ curso.laboratorios }} Labs</span>
       </div>
     </div>
 
     <!-- Lista de aulas -->
     <div class="lesson-list">
-
-      <div class="lesson-item" (click)="abrirAula('A necessidade da cibersegurança')">
-        <div class="lesson-icon">
-          <ion-icon name="play"></ion-icon>
+      <div
+        class="lesson-item"
+        *ngFor="let aula of curso.aulas"
+        (click)="abrirAula(aula)"
+      >
+        <div class="lesson-icon" [class.locked]="aula.bloqueada">
+          <ion-icon [name]="aula.bloqueada ? 'lock-closed' : 'play'"></ion-icon>
         </div>
         <div class="lesson-info">
-          <h3>A necessidade da cibersegurança</h3>
-          <p>Capítulo 1 <span class="dot">•</span> 25 min</p>
+          <h3>{{ aula.titulo }}</h3>
+          <p>{{ aula.capitulo }} <span class="dot">•</span> {{ aula.duracao }}</p>
         </div>
       </div>
-
-      <div class="lesson-item" (click)="abrirAula('Ataques, conceitos e técnicas')">
-        <div class="lesson-icon locked">
-          <ion-icon name="lock-closed"></ion-icon>
-        </div>
-        <div class="lesson-info">
-          <h3>Ataques, conceitos e técnicas</h3>
-          <p>Capítulo 2 <span class="dot">•</span> 40 min</p>
-        </div>
-      </div>
-
-      <div class="lesson-item" (click)="abrirAula('Protegendo seus dados e privacidade')">
-        <div class="lesson-icon locked">
-          <ion-icon name="lock-closed"></ion-icon>
-        </div>
-        <div class="lesson-info">
-          <h3>Protegendo seus dados e privacidade</h3>
-          <p>Capítulo 3 <span class="dot">•</span> 35 min</p>
-        </div>
-      </div>
-
-      <div class="lesson-item" (click)="abrirAula('Protegendo a organização')">
-        <div class="lesson-icon locked">
-          <ion-icon name="lock-closed"></ion-icon>
-        </div>
-        <div class="lesson-info">
-          <h3>Protegendo a organização</h3>
-          <p>Capítulo 4 <span class="dot">•</span> 50 min</p>
-        </div>
-      </div>
-
-      <div class="lesson-item" (click)="abrirAula('Estado da cibersegurança')">
-        <div class="lesson-icon locked">
-          <ion-icon name="lock-closed"></ion-icon>
-        </div>
-        <div class="lesson-info">
-          <h3>Estado da cibersegurança</h3>
-          <p>Capítulo 5 <span class="dot">•</span> 30 min</p>
-        </div>
-      </div>
-
     </div>
+    <!-- QUIZ FINAL -->
+
+<div
+  class="quiz-final-card"
+  *ngIf="curso.quizLiberado"
+  (click)="abrirQuiz()"
+>
+
+  <div class="quiz-final-icon">
+
+    <ion-icon
+      name="document-text-outline"
+    ></ion-icon>
+
+  </div>
+
+  <div class="quiz-final-info">
+
+    <h3>
+      Quiz Final
+    </h3>
+
+    <p>
+      Teste seus conhecimentos sobre cibersegurança
+    </p>
+
+  </div>
+
+  <ion-icon
+    name="arrow-forward-outline"
+    class="quiz-arrow"
+  ></ion-icon>
+
+</div>
 
     <button class="start-course-btn" (click)="comecarCurso()">
       Começar curso

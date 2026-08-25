@@ -42,7 +42,7 @@ export class DashboardPage {
     );
   }
 
-  abrirCurso(id: number) {
+  abrirCurso() {
     this.router.navigate(['/courses']);
   }
 
