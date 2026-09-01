@@ -52,9 +52,10 @@
 
 .activity-info {
   flex: 1;
+  min-width: 0;
 
   h3 {
-    margin: 0;
+    margin: 2px 0 0;
     font-size: 15px;
     font-weight: 600;
     color: #2d2a3d;
@@ -67,14 +68,48 @@
   }
 }
 
-.activity-date {
-  font-size: 12px;
-  color: #b3b0c2;
-  white-space: nowrap;
+.activity-type {
+  color: #7b61ff;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
+.activity-date {
+  font-size: 12px;
+  color: #9c98aa;
+  white-space: nowrap;
+  text-align: right;
+
+  small {
+    display: block;
+    margin-top: 3px;
+    font-size: 11px;
+  }
+}
+
+.history-status,
 .empty-state {
   text-align: center;
-  color: #b3b0c2;
+  color: #8b879b;
   margin-top: 40px;
+}
+
+.history-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+
+  button {
+    border: none;
+    background: #7b61ff;
+    color: #ffffff;
+    border-radius: 12px;
+    padding: 10px 14px;
+  }
+
+  &.error {
+    color: #b9344d;
+  }
 }

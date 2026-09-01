@@ -1,46 +1,104 @@
-<ion-content [fullscreen]="true" class="profile-content">
-
-  <!-- Avatar centralizado no topo -->
-  <div class="profile-avatar-top">
-    <img [src]="fotoPerfil" alt="Avatar" />
+<ion-content
+  [fullscreen]="true"
+  class="profile-content"
+>
+  <div
+    class="profile-loading"
+    *ngIf="carregando"
+  >
+    <ion-spinner name="crescent"></ion-spinner>
   </div>
 
-  <!-- Card com cantos arredondados -->
-  <div class="profile-card">
-
-    <div class="form-group">
-      <label>Email</label>
-      <input 
-        type="email" 
-        [(ngModel)]="email" 
-        placeholder="seuemail@exemplo.com" 
-        class="profile-input" 
+  <ng-container *ngIf="!carregando">
+    <div class="profile-avatar-top">
+      <img
+        [src]="fotoPerfil"
+        (error)="usarAvatarPadrao()"
+        alt="Avatar do usuário"
       />
     </div>
 
-    <div class="form-group">
-      <label>Senha</label>
-      <input 
-        type="password" 
-        [(ngModel)]="senha" 
-        placeholder="••••••••••••" 
-        class="profile-input" 
-      />
+    <div class="profile-card">
+      <div class="account-heading">
+        <h1 *ngIf="nome">{{ nome }}</h1>
+        <p>{{ statusConta }}</p>
+      </div>
+
+      <div class="form-group">
+        <label for="profile-name">Nome</label>
+        <input
+          id="profile-name"
+          type="text"
+          [(ngModel)]="nome"
+          placeholder="Adicione seu nome"
+          class="profile-input"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="profile-email">E-mail</label>
+        <input
+          id="profile-email"
+          type="email"
+          [value]="email"
+          class="profile-input readonly"
+          readonly
+        />
+        <small>
+          O e-mail pertence à conta autenticada.
+        </small>
+      </div>
+
+      <div class="form-group">
+        <label for="profile-avatar">
+          URL do avatar (opcional)
+        </label>
+        <input
+          id="profile-avatar"
+          type="url"
+          [(ngModel)]="avatarUrl"
+          placeholder="https://..."
+          class="profile-input"
+        />
+      </div>
+
+      <p
+        class="profile-message success"
+        *ngIf="mensagem"
+      >
+        {{ mensagem }}
+      </p>
+
+      <p
+        class="profile-message error"
+        *ngIf="mensagemErro"
+      >
+        {{ mensagemErro }}
+      </p>
+
+      <button
+        type="button"
+        class="save-button"
+        [disabled]="salvando"
+        (click)="salvarPerfil()"
+      >
+        {{
+          salvando
+            ? 'Salvando...'
+            : 'Salvar perfil'
+        }}
+      </button>
+
+      <button
+        type="button"
+        class="logout-button"
+        (click)="sair()"
+      >
+        <ion-icon name="log-out-outline"></ion-icon>
+        Sair da conta
+      </button>
     </div>
-
-    <div class="change-photo-row" (click)="alterarFoto()">
-      <span class="change-photo-text">Alterar foto<br />de Perfil</span>
-      <ion-avatar class="change-photo-avatar">
-        <img [src]="fotoPerfil" alt="Avatar" />
-      </ion-avatar>
-    </div>
-
-    <button class="save-button" (click)="salvarPerfil()">
-      Salvar?
-    </button>
-
-  </div>
-
+  </ng-container>
 </ion-content>
 
 <app-tab-bar></app-tab-bar>

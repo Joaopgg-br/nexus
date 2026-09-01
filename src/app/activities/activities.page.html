@@ -1,28 +1,73 @@
-<ion-content [fullscreen]="true" class="activities-content">
-
+<ion-content
+  [fullscreen]="true"
+  class="activities-content"
+>
   <div class="activities-header">
     <h1>Histórico</h1>
     <p>Suas atividades recentes</p>
   </div>
 
   <div class="activities-list">
-
-    <div class="activity-item" *ngFor="let item of historico">
-      <div class="activity-icon">
-        <ion-icon [name]="item.icone"></ion-icon>
-      </div>
-      <div class="activity-info">
-        <h3>{{ item.titulo }}</h3>
-        <p>{{ item.descricao }}</p>
-      </div>
-      <span class="activity-date">{{ item.data }}</span>
+    <div
+      class="history-status"
+      *ngIf="carregando"
+    >
+      <ion-spinner name="crescent"></ion-spinner>
+      <span>Carregando histórico...</span>
     </div>
 
-    <p class="empty-state" *ngIf="historico.length === 0">
-      Nenhuma atividade ainda.
+    <div
+      class="history-status error"
+      *ngIf="!carregando && mensagemErro"
+    >
+      <span>{{ mensagemErro }}</span>
+      <button
+        type="button"
+        (click)="carregarHistorico()"
+      >
+        Tentar novamente
+      </button>
+    </div>
+
+    <div
+      class="activity-item"
+      *ngFor="let item of historico"
+    >
+      <div class="activity-icon">
+        <ion-icon
+          [name]="iconePara(item.tipo)"
+        ></ion-icon>
+      </div>
+
+      <div class="activity-info">
+        <span class="activity-type">
+          {{ rotuloPara(item.tipo) }}
+        </span>
+        <h3>{{ item.titulo }}</h3>
+        <p *ngIf="item.descricao">
+          {{ item.descricao }}
+        </p>
+      </div>
+
+      <span class="activity-date">
+        {{ item.criado_em | date:'dd/MM/yyyy' }}
+        <small>
+          {{ item.criado_em | date:'HH:mm' }}
+        </small>
+      </span>
+    </div>
+
+    <p
+      class="empty-state"
+      *ngIf="
+        !carregando &&
+        !mensagemErro &&
+        historico.length === 0
+      "
+    >
+      Nenhuma atividade registrada ainda.
     </p>
-
   </div>
-
 </ion-content>
+
 <app-tab-bar></app-tab-bar>

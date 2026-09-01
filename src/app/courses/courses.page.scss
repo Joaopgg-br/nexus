@@ -155,18 +155,16 @@
 }
 
 .lesson-item {
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 14px;
   padding: 14px;
   border-radius: 16px;
   background: #f9fafb;
+  border: 0;
+  text-align: left;
   cursor: pointer;
-  transition: background 0.15s ease;
-
-  &:active {
-    background: #eef0f4;
-  }
 
   .lesson-icon {
     width: 42px;
@@ -232,6 +230,7 @@
   }
 }
 .quiz-final-card {
+  width: 100%;
   display: flex;
   align-items: center;
 
@@ -245,6 +244,8 @@
   border: 2px solid #2563eb;
 
   border-radius: 16px;
+
+  text-align: left;
 
   cursor: pointer;
 

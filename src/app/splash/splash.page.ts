@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { SupabaseService } from '../services/supabase.service';
 
 @Component({
   selector: 'app-splash',
@@ -8,31 +9,25 @@ import { Router } from '@angular/router';
   styleUrls: ['./splash.page.scss'],
   standalone: false
 })
-
-
 export class SplashPage implements OnInit {
 
+  constructor(
+    private readonly router: Router,
+    private readonly supabase: SupabaseService
+  ) {}
 
-constructor(
-private router: Router
-){}
+  async ngOnInit(): Promise<void> {
+    await new Promise(resolve =>
+      setTimeout(resolve, 1200)
+    );
 
+    const { data } = await this.supabase.sessaoAtual();
+    const destino =
+      data.session ? '/dashboard' : '/home';
 
-
-ngOnInit() {
-
-
-setTimeout(() => {
-
-
-this.router.navigateByUrl('/home');
-
-
-}, 3000);
-
-
-}
-
-
-
+    await this.router.navigateByUrl(
+      destino,
+      { replaceUrl: true }
+    );
+  }
 }
