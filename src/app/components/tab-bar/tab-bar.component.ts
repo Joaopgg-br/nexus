@@ -4,5 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-tab-bar',
   templateUrl: './tab-bar.component.html',
   styleUrls: ['./tab-bar.component.scss'],
+  standalone: false,
 })
 export class TabBarComponent {}
