@@ -1,7 +1,12 @@
 :host {
-  --purple: #7B2FF7;
-  --blue: #4A6CF7;
-  --gradient: linear-gradient(135deg, var(--blue), var(--purple));
+  --purple: #7b2ff7;
+  --blue: #4a6cf7;
+  --gradient:
+    linear-gradient(
+      135deg,
+      var(--blue),
+      var(--purple)
+    );
 }
 
 .profile-content {
@@ -9,28 +14,49 @@
   --padding-bottom: 100px;
 }
 
-/* ===== AVATAR TOPO ===== */
+.profile-loading {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .profile-avatar-top {
   display: flex;
   justify-content: center;
   padding: 24px 0 20px;
 
   img {
-    width: 64px;
-    height: 64px;
+    width: 82px;
+    height: 82px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #f0f0f0;
+    border: 3px solid #f0f0f0;
   }
 }
 
-/* ===== CARD ===== */
 .profile-card {
   background: #ffffff;
   border-radius: 28px 28px 0 0;
   box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.06);
   padding: 28px 24px 40px;
   min-height: 60vh;
+}
+
+.account-heading {
+  margin-bottom: 24px;
+
+  h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #1a1a1a;
+  }
+
+  p {
+    margin: 6px 0 0;
+    color: #777388;
+    font-size: 13px;
+  }
 }
 
 .form-group {
@@ -43,119 +69,78 @@
     margin-bottom: 8px;
   }
 
-  .profile-input {
-    width: 100%;
-    border: none;
-    outline: none;
-    background: #F5F5F9;
-    border-radius: 14px;
-    padding: 14px 16px;
-    font-size: 14px;
-    color: #1a1a1a;
-    box-sizing: border-box;
-
-    &::placeholder {
-      color: #c2c2c2;
-      letter-spacing: 1px;
-    }
+  small {
+    display: block;
+    margin-top: 7px;
+    color: #8b879b;
   }
 }
 
-/* ===== ALTERAR FOTO ===== */
-.change-photo-row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin: 24px 0 28px;
-  cursor: pointer;
-
-  .change-photo-text {
-    color: var(--purple);
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 1.35;
-  }
-
-  .change-photo-avatar {
-    width: 42px;
-    height: 42px;
-    flex-shrink: 0;
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-    }
-  }
-}
-
-/* ===== BOTÃO SALVAR ===== */
-.save-button {
+.profile-input {
   width: 100%;
   border: none;
-  background: #BFF3F7;
-  color: #E056A0;
+  outline: none;
+  background: #f5f5f9;
+  border-radius: 14px;
+  padding: 14px 16px;
+  font-size: 14px;
+  color: #1a1a1a;
+  box-sizing: border-box;
+
+  &.readonly {
+    color: #777388;
+    cursor: not-allowed;
+  }
+
+  &::placeholder {
+    color: #c2c2c2;
+  }
+}
+
+.save-button,
+.logout-button {
+  width: 100%;
+  border: none;
   font-weight: 600;
   font-size: 15px;
   padding: 14px;
   border-radius: 16px;
   cursor: pointer;
-  transition: opacity 0.2s ease;
 
-  &:active {
-    opacity: 0.8;
+  &:disabled {
+    opacity: 0.6;
+    cursor: wait;
   }
 }
 
-/* ===== BOTTOM NAV (igual ao dashboard) ===== */
-.bottom-nav {
-  position: fixed;
-  bottom: 18px;
-  left: 50%;
-  transform: translateX(-50%);
+.save-button {
+  background: #bff3f7;
+  color: #e056a0;
+  margin-top: 8px;
+}
+
+.logout-button {
+  margin-top: 12px;
+  background: #fff0f3;
+  color: #d94d68;
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 28px;
-  background: #ffffff;
-  padding: 10px 24px;
-  border-radius: 40px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-  z-index: 10;
+  gap: 8px;
+}
 
-  .nav-item {
-    background: transparent;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
+.profile-message {
+  padding: 11px 13px;
+  border-radius: 12px;
+  font-size: 13px;
 
-    ion-icon {
-      font-size: 22px;
-      color: var(--purple);
-      opacity: 0.6;
-    }
+  &.success {
+    background: #e9f9ef;
+    color: #267a45;
+  }
 
-    &.active {
-      opacity: 1;
-    }
-
-    .nav-home-btn {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--gradient);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 8px 16px rgba(123, 47, 247, 0.35);
-
-      ion-icon {
-        color: #fff;
-        opacity: 1;
-        font-size: 22px;
-      }
-    }
+  &.error {
+    background: #fff0f3;
+    color: #b9344d;
   }
 }

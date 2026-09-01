@@ -1,164 +1,178 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router
+} from '@angular/router';
 import {
   DomSanitizer,
   SafeResourceUrl
 } from '@angular/platform-browser';
 
-import { Curso, Aula } from '../services/curso';
+import { Aula, Curso } from '../services/curso';
+import { SupabaseService } from '../services/supabase.service';
 
 @Component({
   selector: 'app-lesson',
   templateUrl: './lesson.page.html',
   styleUrls: ['./lesson.page.scss'],
-  standalone: false,
+  standalone: false
 })
 export class LessonPage implements OnInit {
 
-  cursoNome: string = 'Introduction to Cybersecurity';
-
-  aulaIndex: number = 0;
-
+  aulaIndex = 0;
   aula: Aula | null = null;
-
   videoSeguro: SafeResourceUrl | null = null;
-
-  totalAulas: number = 0;
+  totalAulas = 0;
+  carregando = true;
+  mensagemErro = '';
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private sanitizer: DomSanitizer,
-    private curso: Curso
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
+    private readonly sanitizer: DomSanitizer,
+    private readonly supabase: SupabaseService,
+    public readonly curso: Curso
   ) {}
 
-  ngOnInit() {
-
+  ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-
       this.aulaIndex = Number(
         params.get('aulaIndex')
       );
 
-      this.carregarAula();
-
+      void this.carregarAula();
     });
-
   }
 
-  carregarAula() {
+  private async carregarAula(): Promise<void> {
+    this.carregando = true;
+    this.mensagemErro = '';
 
-    // Quantidade total de aulas
-    this.totalAulas = this.curso.aulas.length;
+    try {
+      const historico =
+        await this.supabase.buscarHistorico();
 
-    // Busca a aula pelo índice
-    this.aula = this.curso.getAula(
-      this.aulaIndex
-    );
+      const concluidas = historico
+        .filter(item =>
+          item.tipo === 'aula_concluida' &&
+          item.curso_id === this.curso.id &&
+          typeof item.aula_indice === 'number'
+        )
+        .map(item => item.aula_indice as number);
 
-    // Configura o vídeo
-    if (this.aula) {
-
-      this.videoSeguro =
-        this.sanitizer.bypassSecurityTrustResourceUrl(
-          this.aula.videoUrl
-        );
-
+      this.curso.restaurarProgresso(concluidas);
+    } catch (error) {
+      console.error(
+        'Não foi possível restaurar o progresso.',
+        error
+      );
     }
 
+    this.totalAulas = this.curso.aulas.length;
+    const aula = this.curso.getAula(this.aulaIndex);
+
+    if (!aula || aula.bloqueada) {
+      this.aula = null;
+      this.videoSeguro = null;
+      this.carregando = false;
+      return;
+    }
+
+    this.aula = aula;
+    this.videoSeguro = aula.videoUrl
+      ? this.sanitizer.bypassSecurityTrustResourceUrl(
+          aula.videoUrl
+        )
+      : null;
+
+    try {
+      await this.supabase.registrarAtividade({
+        tipo: 'aula_acessada',
+        titulo: 'Aula acessada',
+        descricao: aula.titulo,
+        cursoId: this.curso.id,
+        aulaIndice: this.aulaIndex
+      });
+    } catch (error) {
+      console.error(
+        'Não foi possível registrar o acesso à aula.',
+        error
+      );
+    } finally {
+      this.carregando = false;
+    }
   }
 
-  voltar() {
-
-    this.router.navigate([
-      '/courses'
-    ]);
-
+  voltar(): void {
+    void this.router.navigate(['/courses']);
   }
 
   temAulaAnterior(): boolean {
-
     return this.aulaIndex > 0;
-
   }
 
   temProximaAula(): boolean {
+    const proxima =
+      this.curso.getAula(this.aulaIndex + 1);
 
-    return (
-      this.aulaIndex <
-      this.totalAulas - 1
-    );
-
+    return !!proxima && !proxima.bloqueada;
   }
 
-  aulaAnterior() {
-
+  aulaAnterior(): void {
     if (!this.temAulaAnterior()) {
       return;
     }
 
-    this.router.navigate([
+    void this.router.navigate([
       '/lesson',
       this.aulaIndex - 1
     ]);
-
   }
 
-  proximaAula() {
-
+  proximaAula(): void {
     if (!this.temProximaAula()) {
       return;
     }
 
-    const proximaAula =
-      this.curso.getAula(
-        this.aulaIndex + 1
-      );
-
-    // Não permite entrar em aula bloqueada
-    if (
-      !proximaAula ||
-      proximaAula.bloqueada
-    ) {
-      console.log('Próxima aula está bloqueada');
-      return;
-    }
-
-    this.router.navigate([
+    void this.router.navigate([
       '/lesson',
       this.aulaIndex + 1
     ]);
-
   }
 
-  marcarConcluida() {
-
-    if (!this.aula) {
+  async marcarConcluida(): Promise<void> {
+    if (!this.aula || this.aula.concluida) {
       return;
     }
 
-    // Marca a aula atual como concluída
-    // e desbloqueia a próxima
+    this.mensagemErro = '';
+
+    try {
+      await this.supabase.registrarAtividade({
+        tipo: 'aula_concluida',
+        titulo: 'Aula concluída',
+        descricao: this.aula.titulo,
+        cursoId: this.curso.id,
+        aulaIndice: this.aulaIndex
+      });
+    } catch {
+      this.mensagemErro =
+        'Não foi possível salvar a conclusão. Tente novamente.';
+      return;
+    }
+
     this.curso.marcarAulaConcluida(
       this.aulaIndex
     );
 
-    // Vai para a próxima aula
     if (this.temProximaAula()) {
-
-      this.router.navigate([
+      await this.router.navigate([
         '/lesson',
         this.aulaIndex + 1
       ]);
-
-    } else {
-
-      // Se foi a última aula,
-      // volta para a página do curso
-      this.voltar();
-
+      return;
     }
 
+    await this.router.navigate(['/courses']);
   }
-
 }

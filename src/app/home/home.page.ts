@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { SupabaseService } from '../services/supabase.service';
 
 type AuthMode = 'login' | 'register';
-
 type LoginStep = 'email' | 'password';
 
 @Component({
@@ -17,396 +20,188 @@ type LoginStep = 'email' | 'password';
 export class HomePage implements OnInit {
 
   mode: AuthMode = 'login';
-
   loginStep: LoginStep = 'email';
-
   loginForm!: FormGroup;
-
   registerForm!: FormGroup;
-
   isLoading = false;
-
   errorMessage = '';
 
-
   constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private supabase: SupabaseService
+    private readonly fb: FormBuilder,
+    private readonly router: Router,
+    private readonly supabase: SupabaseService
   ) {}
 
+  async ngOnInit(): Promise<void> {
+    this.criarFormularios();
 
-  ngOnInit() {
+    const { data } = await this.supabase.sessaoAtual();
 
-    // =========================
-    // FORMULÁRIO DE LOGIN
-    // =========================
+    if (data.session) {
+      await this.router.navigate(
+        ['/dashboard'],
+        { replaceUrl: true }
+      );
+    }
+  }
 
+  private criarFormularios(): void {
     this.loginForm = this.fb.group({
-
       email: [
         '',
-        [
-          Validators.required,
-          Validators.email
-        ]
+        [Validators.required, Validators.email]
       ],
-
       password: [
         '',
-        [
-          Validators.required,
-          Validators.minLength(6)
-        ]
+        [Validators.required, Validators.minLength(6)]
       ]
-
     });
-
-
-    // =========================
-    // FORMULÁRIO DE REGISTRO
-    // =========================
 
     this.registerForm = this.fb.group({
-
-      name: [
-        '',
-        [
-          Validators.required
-        ]
-      ],
-
+      name: ['', [Validators.required]],
       email: [
         '',
-        [
-          Validators.required,
-          Validators.email
-        ]
+        [Validators.required, Validators.email]
       ],
-
       password: [
         '',
-        [
-          Validators.required,
-          Validators.minLength(6)
-        ]
+        [Validators.required, Validators.minLength(6)]
       ]
-
     });
-
   }
 
-
-  // =========================
-  // TROCAR LOGIN / REGISTRO
-  // =========================
-
-  setMode(mode: AuthMode) {
-
+  setMode(mode: AuthMode): void {
     this.mode = mode;
-
     this.loginStep = 'email';
-
     this.errorMessage = '';
-
     this.loginForm.reset();
-
     this.registerForm.reset();
-
   }
 
-
-  // =========================
-  // PRÓXIMO NO LOGIN
-  // =========================
-
-  onLoginNext() {
-
-    const email =
-      this.loginForm.get('email');
-
+  onLoginNext(): void {
+    const email = this.loginForm.get('email');
 
     if (email?.valid) {
-
       this.errorMessage = '';
-
       this.loginStep = 'password';
-
-    } else {
-
-      email?.markAsTouched();
-
+      return;
     }
 
+    email?.markAsTouched();
   }
 
-
-  // =========================
-  // LOGIN SUPABASE
-  // =========================
-
-  async onLoginSubmit() {
-
+  async onLoginSubmit(): Promise<void> {
     if (this.loginForm.invalid) {
-
       this.loginForm.markAllAsTouched();
-
       return;
-
     }
 
-
     this.isLoading = true;
-
     this.errorMessage = '';
 
-
-    const email =
-      this.loginForm.get('email')?.value;
-
-    const password =
-      this.loginForm.get('password')?.value;
-
+    const { email, password } =
+      this.loginForm.getRawValue();
 
     try {
-
-      const { data, error } =
-        await this.supabase.login(
-          email,
-          password
-        );
-
+      const { error } = await this.supabase.login(
+        email,
+        password
+      );
 
       if (error) {
-
-        console.error(
-          'Erro no login:',
-          error
-        );
-
         this.errorMessage =
           this.traduzirErro(error.message);
-
         return;
-
       }
 
-
-      console.log(
-        'Login realizado com sucesso:',
-        data.user
+      await this.router.navigate(
+        ['/dashboard'],
+        { replaceUrl: true }
       );
-
-
-      // Usuário autenticado
-      this.router.navigate([
-        '/dashboard'
-      ]);
-
-    }
-
-    catch (error) {
-
-      console.error(
-        'Erro inesperado:',
-        error
-      );
-
+    } catch {
       this.errorMessage =
         'Não foi possível realizar o login.';
-
-    }
-
-    finally {
-
+    } finally {
       this.isLoading = false;
-
     }
-
   }
 
-
-  // =========================
-  // CADASTRO SUPABASE
-  // =========================
-
-  async onRegisterSubmit() {
-
+  async onRegisterSubmit(): Promise<void> {
     if (this.registerForm.invalid) {
-
       this.registerForm.markAllAsTouched();
-
       return;
-
     }
 
-
     this.isLoading = true;
-
     this.errorMessage = '';
 
-
-    const name =
-      this.registerForm.get('name')?.value;
-
-    const email =
-      this.registerForm.get('email')?.value;
-
-    const password =
-      this.registerForm.get('password')?.value;
-
+    const { name, email, password } =
+      this.registerForm.getRawValue();
 
     try {
-
       const { data, error } =
         await this.supabase.cadastrar(
           email,
-          password
+          password,
+          name
         );
-
 
       if (error) {
-
-        console.error(
-          'Erro no cadastro:',
-          error
-        );
-
         this.errorMessage =
           this.traduzirErro(error.message);
-
         return;
-
       }
-
-
-      console.log(
-        'Cadastro realizado:',
-        data.user
-      );
-
-
-      /*
-       * Dependendo da configuração do Supabase,
-       * o usuário pode precisar confirmar o e-mail.
-       */
 
       if (data.session) {
-
-        this.router.navigate([
-          '/dashboard'
-        ]);
-
-      } else {
-
-        this.errorMessage =
-          'Cadastro realizado! Verifique seu e-mail para confirmar a conta.';
-
-        this.mode = 'login';
-
-        this.loginStep = 'email';
-
+        await this.router.navigate(
+          ['/dashboard'],
+          { replaceUrl: true }
+        );
+        return;
       }
 
-    }
-
-    catch (error) {
-
-      console.error(
-        'Erro inesperado:',
-        error
-      );
-
+      this.errorMessage =
+        'Cadastro realizado! Verifique seu e-mail para confirmar a conta.';
+      this.mode = 'login';
+      this.loginStep = 'email';
+    } catch {
       this.errorMessage =
         'Não foi possível criar a conta.';
-
-    }
-
-    finally {
-
+    } finally {
       this.isLoading = false;
-
     }
-
   }
 
-
-  // =========================
-  // TRADUZIR ERROS
-  // =========================
-
-  traduzirErro(
-    erro: string
-  ): string {
-
-    if (
-      erro.includes(
-        'Invalid login credentials'
-      )
-    ) {
-
+  traduzirErro(erro: string): string {
+    if (erro.includes('Invalid login credentials')) {
       return 'E-mail ou senha incorretos.';
-
     }
 
-
-    if (
-      erro.includes(
-        'User already registered'
-      )
-    ) {
-
+    if (erro.includes('User already registered')) {
       return 'Este e-mail já está cadastrado.';
-
     }
 
-
-    if (
-      erro.includes(
-        'Email not confirmed'
-      )
-    ) {
-
+    if (erro.includes('Email not confirmed')) {
       return 'Confirme seu e-mail antes de entrar.';
-
     }
 
-
-    if (
-      erro.includes(
-        'Password should be at least'
-      )
-    ) {
-
+    if (erro.includes('Password should be at least')) {
       return 'A senha precisa ter pelo menos 6 caracteres.';
-
     }
-
 
     return erro;
-
   }
-
-
-  // =========================
-  // ERROS DO FORMULÁRIO
-  // =========================
 
   hasError(
     form: FormGroup,
     field: string,
     error: string
-  ) {
-
-    const control =
-      form.get(field);
-
+  ): boolean {
+    const control = form.get(field);
 
     return !!(
       control?.hasError(error) &&
       control.touched
     );
-
   }
-
 }

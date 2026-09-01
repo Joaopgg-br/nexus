@@ -1,23 +1,40 @@
-<ion-content [fullscreen]="true"
-             [scrollY]="true"
-             [scrollX]="false"
-             class="dashboard-content">
-
-  <!-- Header / Saudação -->
+<ion-content
+  [fullscreen]="true"
+  [scrollY]="true"
+  [scrollX]="false"
+  class="dashboard-content"
+>
   <div class="dashboard-header">
     <div class="greeting">
       <h2 class="greeting-text">Olá 👋</h2>
-      <h1 class="greeting-name">Aluno</h1>
+      <h1
+        class="greeting-name"
+        *ngIf="nomeUsuario"
+      >
+        {{ nomeUsuario }}
+      </h1>
     </div>
-    <div class="avatar">
-      <img src="assets/perfil.png" alt="Avatar" />
-    </div>
+
+    <button
+      type="button"
+      class="avatar"
+      (click)="abrirPerfil()"
+      aria-label="Abrir perfil"
+    >
+      <img
+        [src]="fotoPerfil"
+        (error)="usarAvatarPadrao()"
+        alt="Avatar do usuário"
+      />
+    </button>
   </div>
 
-  <!-- Barra de Pesquisa -->
   <div class="search-section">
     <div class="search-bar">
-      <ion-icon name="search-outline" class="search-icon"></ion-icon>
+      <ion-icon
+        name="search-outline"
+        class="search-icon"
+      ></ion-icon>
       <input
         type="text"
         placeholder="Buscar curso ou categoria"
@@ -27,7 +44,6 @@
     </div>
   </div>
 
-  <!-- Carrossel infinito de parceiros -->
   <div class="partners-wrapper">
     <div class="partners-track">
       <img src="assets/microsoft.png" alt="Microsoft" />
@@ -35,7 +51,6 @@
       <img src="assets/adobe.png" alt="Adobe" />
       <img src="assets/senai.png" alt="SENAI" />
       <img src="assets/sesi.jpg" alt="SESI" />
-      <!-- Cópia para loop contínuo -->
       <img src="assets/microsoft.png" alt="Microsoft" />
       <img src="assets/google.png" alt="Google" />
       <img src="assets/adobe.png" alt="Adobe" />
@@ -44,34 +59,51 @@
     </div>
   </div>
 
-  <!-- Scroll horizontal de cursos -->
   <div class="courses-section">
-    <div class="courses-scroll" #coursesScroll
-         (touchstart)="$event.stopPropagation()"
-         (mousedown)="$event.stopPropagation()">
-
+    <div
+      class="courses-scroll"
+      (touchstart)="$event.stopPropagation()"
+      (mousedown)="$event.stopPropagation()"
+    >
       <ion-card
         class="course-card"
         *ngFor="let curso of cursosFiltrados"
-        (click)="abrirCurso()"
+        (click)="abrirCurso(curso)"
       >
-        <div class="course-thumbnail" [ngClass]="curso.corThumb">
-          <img [src]="curso.imagem" [alt]="curso.titulo" />
-          <div class="course-duration" *ngIf="curso.duracao">{{ curso.duracao }}</div>
+        <div
+          class="course-thumbnail"
+          [ngClass]="curso.corThumb"
+        >
+          <img
+            [src]="curso.imagem"
+            [alt]="curso.titulo"
+          />
+          <div
+            class="course-duration"
+            *ngIf="curso.duracao"
+          >
+            {{ curso.duracao }}
+          </div>
         </div>
+
         <ion-card-content>
-          <p class="course-category">{{ curso.categoria }}</p>
-          <h3 class="course-title">{{ curso.titulo }}</h3>
+          <p class="course-category">
+            {{ curso.categoria }}
+          </p>
+          <h3 class="course-title">
+            {{ curso.titulo }}
+          </h3>
         </ion-card-content>
       </ion-card>
 
-      <p class="empty-state" *ngIf="cursosFiltrados.length === 0">
+      <p
+        class="empty-state"
+        *ngIf="cursosFiltrados.length === 0"
+      >
         Nenhum curso encontrado.
       </p>
-
     </div>
   </div>
-
 </ion-content>
 
 <app-tab-bar></app-tab-bar>

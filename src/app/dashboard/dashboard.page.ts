@@ -1,70 +1,99 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { Curso } from '../services/curso';
+import { SupabaseService } from '../services/supabase.service';
+
 interface CursoResumo {
-
   id: number;
-
   titulo: string;
-
   categoria: string;
-
   imagem: string;
-
   duracao?: string;
-
   corThumb: string;
-
 }
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
-  standalone: false,
+  standalone: false
 })
 export class DashboardPage {
 
-  termoBusca: string = '';
+  termoBusca = '';
+  nomeUsuario = '';
+  fotoPerfil = 'assets/perfil.png';
+  cursos: CursoResumo[] = [];
 
-  cursos: CursoResumo[] = [
-    {
-      id: 1,
-      titulo: 'Introduction to Cybersecurity',
-      categoria: 'Cybersecurity',
-      imagem: 'assets/ciber.jpg',
-      duracao: '6h',
-      corThumb: 'thumb-cyber',
-    }
-  ];
+  constructor(
+    private readonly router: Router,
+    private readonly supabase: SupabaseService,
+    curso: Curso
+  ) {
+    this.cursos = [{
+      id: curso.id,
+      titulo: curso.nome,
+      categoria: curso.categoria,
+      imagem: curso.imagem,
+      duracao: curso.cargaHoraria,
+      corThumb: 'thumb-cyber'
+    }];
+  }
 
-  constructor(private router: Router) {}
+  async ionViewWillEnter(): Promise<void> {
+    const { data } = await this.supabase.usuarioAtual();
+    const metadata = data.user?.user_metadata;
+
+    this.nomeUsuario =
+      metadata?.['full_name'] ??
+      metadata?.['name'] ??
+      '';
+
+    this.fotoPerfil =
+      metadata?.['avatar_url'] ??
+      metadata?.['picture'] ??
+      'assets/perfil.png';
+  }
 
   get cursosFiltrados(): CursoResumo[] {
+    const termo = this.termoBusca
+      .trim()
+      .toLowerCase();
 
-    if (!this.termoBusca.trim()) {
+    if (!termo) {
       return this.cursos;
     }
 
-    const termo = this.termoBusca.toLowerCase();
-
-    return this.cursos.filter(c =>
-      c.titulo.toLowerCase().includes(termo) ||
-      c.categoria.toLowerCase().includes(termo)
+    return this.cursos.filter(curso =>
+      curso.titulo.toLowerCase().includes(termo) ||
+      curso.categoria.toLowerCase().includes(termo)
     );
-
   }
 
-  abrirCurso() {
-    this.router.navigate(['/courses']);
+  async abrirCurso(curso: CursoResumo): Promise<void> {
+    try {
+      await this.supabase.registrarAtividade({
+        tipo: 'curso_acessado',
+        titulo: 'Curso acessado',
+        descricao: curso.titulo,
+        cursoId: curso.id
+      });
+    } catch (error) {
+      console.error(
+        'Não foi possível registrar o acesso ao curso.',
+        error
+      );
+    }
+
+    await this.router.navigate(['/courses']);
   }
 
-  irHome() {
-    this.router.navigate(['/dashboard']);
+  abrirPerfil(): void {
+    void this.router.navigate(['/profile']);
   }
 
-  abrirPerfil() {
-    this.router.navigate(['/profile']);
+  usarAvatarPadrao(): void {
+    this.fotoPerfil = 'assets/perfil.png';
   }
-
 }
