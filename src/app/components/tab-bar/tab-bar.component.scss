@@ -1,0 +1,47 @@
+.tab-bar {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  z-index: 999;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  background: #ffffff;
+  border-radius: 32px;
+  padding: 8px 12px;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.tab-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.tab-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  transition: background 0.2s ease, color 0.2s ease;
+
+  ion-icon {
+    font-size: 22px;
+    color: var(--ion-color-primary, #7b61ff);
+  }
+}
+
+.tab-active .tab-icon-wrap {
+  background: var(--ion-color-primary, #7b61ff);
+
+  ion-icon {
+    color: #ffffff;
+  }
+}

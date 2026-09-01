@@ -1,0 +1,80 @@
+.activities-content {
+  --background: #f7f6fb;
+}
+
+.activities-header {
+  padding: 24px 20px 8px;
+
+  h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: #2d2a3d;
+  }
+
+  p {
+    margin: 4px 0 0;
+    color: #8b879b;
+    font-size: 14px;
+  }
+}
+
+.activities-list {
+  padding: 12px 20px 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 14px 16px;
+}
+
+.activity-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(123, 97, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  ion-icon {
+    font-size: 20px;
+    color: var(--ion-color-primary, #7b61ff);
+  }
+}
+
+.activity-info {
+  flex: 1;
+
+  h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #2d2a3d;
+  }
+
+  p {
+    margin: 2px 0 0;
+    font-size: 13px;
+    color: #8b879b;
+  }
+}
+
+.activity-date {
+  font-size: 12px;
+  color: #b3b0c2;
+  white-space: nowrap;
+}
+
+.empty-state {
+  text-align: center;
+  color: #b3b0c2;
+  margin-top: 40px;
+}

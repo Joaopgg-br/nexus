@@ -1,0 +1,28 @@
+<ion-content [fullscreen]="true" class="activities-content">
+
+  <div class="activities-header">
+    <h1>Histórico</h1>
+    <p>Suas atividades recentes</p>
+  </div>
+
+  <div class="activities-list">
+
+    <div class="activity-item" *ngFor="let item of historico">
+      <div class="activity-icon">
+        <ion-icon [name]="item.icone"></ion-icon>
+      </div>
+      <div class="activity-info">
+        <h3>{{ item.titulo }}</h3>
+        <p>{{ item.descricao }}</p>
+      </div>
+      <span class="activity-date">{{ item.data }}</span>
+    </div>
+
+    <p class="empty-state" *ngIf="historico.length === 0">
+      Nenhuma atividade ainda.
+    </p>
+
+  </div>
+
+</ion-content>
+<app-tab-bar></app-tab-bar>

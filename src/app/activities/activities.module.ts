@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
-import { ProfilePageRoutingModule } from './profile-routing.module';
-import { ProfilePage } from './profile.page';
+import { ActivitiesPageRoutingModule } from './activities-routing.module';
+import { ActivitiesPage } from './activities.page';
 import { TabBarModule } from '../components/tab-bar/tab-bar.module';
 
 @NgModule({
@@ -12,9 +12,9 @@ import { TabBarModule } from '../components/tab-bar/tab-bar.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    ProfilePageRoutingModule,
+    ActivitiesPageRoutingModule,
     TabBarModule
   ],
-  declarations: [ProfilePage]
+  declarations: [ActivitiesPage]
 })
-export class ProfilePageModule {}
+export class ActivitiesPageModule {}
