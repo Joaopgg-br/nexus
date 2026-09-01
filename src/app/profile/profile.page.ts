@@ -1,56 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-
-import { SupabaseService } from '../services/supabase.service';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
-  standalone: false,
+  standalone: false
 })
-export class ProfilePage implements OnInit {
+export class ProfilePage {
 
   email: string = '';
-
   senha: string = '';
-
   fotoPerfil: string = 'assets/perfil.png';
 
-  constructor(
-    private supabase: SupabaseService
-  ) {}
+  constructor(private router: Router) {}
 
-  async ngOnInit(): Promise<void> {
-
-    const { data, error } =
-      await this.supabase.usuarioAtual();
-
-    if (error) {
-      console.error(
-        'Não foi possível carregar o usuário:',
-        error
-      );
-      return;
-    }
-
-    this.email = data.user?.email ?? '';
-
+  alterarFoto() {
+    // depois pluga aqui um input file ou câmera (Capacitor Camera plugin)
+    console.log('Alterar foto de perfil');
   }
 
-  alterarFoto(): void {
-
-    console.log(
-      'A seleção de uma nova foto ainda precisa ser configurada.'
-    );
-
+  salvarPerfil() {
+    console.log('Salvando perfil:', { email: this.email, senha: this.senha });
+    // aqui entra a chamada pro seu backend
   }
 
-  salvarPerfil(): void {
-
-    console.log(
-      'Dados do perfil prontos para serem salvos.'
-    );
-
-  }
-
+  irHome() { this.router.navigate(['/dashboard']); }
+  abrirCursos() { this.router.navigate(['/courses']); }
+  abrirPerfil() { this.router.navigate(['/profile']); }
 }
