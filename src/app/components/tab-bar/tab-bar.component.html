@@ -1,8 +1,10 @@
-<div class="tab-bar">
+<nav class="tab-bar" aria-label="Navegação principal">
 
   <a
     class="tab-item"
     routerLink="/dashboard"
+    aria-label="Início"
+    ariaCurrentWhenActive="page"
     routerLinkActive="tab-active"
     [routerLinkActiveOptions]="{ exact: true }">
 
@@ -15,6 +17,8 @@
   <a
     class="tab-item"
     routerLink="/courses"
+    aria-label="Curso"
+    ariaCurrentWhenActive="page"
     routerLinkActive="tab-active"
     [routerLinkActiveOptions]="{ exact: true }">
 
@@ -27,6 +31,8 @@
   <a
     class="tab-item"
     routerLink="/activities"
+    aria-label="Histórico"
+    ariaCurrentWhenActive="page"
     routerLinkActive="tab-active"
     [routerLinkActiveOptions]="{ exact: true }">
 
@@ -39,6 +45,8 @@
   <a
     class="tab-item"
     routerLink="/profile"
+    aria-label="Perfil"
+    ariaCurrentWhenActive="page"
     routerLinkActive="tab-active"
     [routerLinkActiveOptions]="{ exact: true }">
 
@@ -48,4 +56,4 @@
 
   </a>
 
-</div>
+</nav>

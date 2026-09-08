@@ -1,9 +1,13 @@
 .tab-bar {
   position: fixed;
-  left: 16px;
-  right: 16px;
+  left: max(16px, env(safe-area-inset-left, 0px));
+  right: max(16px, env(safe-area-inset-right, 0px));
   bottom: calc(16px + env(safe-area-inset-bottom, 0px));
   z-index: 999;
+  height: var(--nexus-tab-height);
+  max-width: 560px;
+  margin-inline: auto;
+  box-sizing: border-box;
 
   display: flex;
   align-items: center;

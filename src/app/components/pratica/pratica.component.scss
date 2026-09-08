@@ -1,0 +1,24 @@
+:host { display: block; margin: 24px 0; color: #334155; }
+.practice-card { border: 1px solid #e2e8f0; border-radius: 20px; padding: clamp(16px, 4vw, 24px); background: #fff; }
+.practice-label { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; color: #4338ca; font-size: 12px; font-weight: 700; text-transform: uppercase; }
+h2 { color: #111827; font-size: 20px; line-height: 1.35; margin: 12px 0; }
+p { font-size: 14px; line-height: 1.65; }
+.objective { color: #64748b; }
+.instruction { font-weight: 600; }
+pre { white-space: pre-wrap; overflow-wrap: anywhere; padding: 16px; border-radius: 12px; background: #eef2ff; color: #312e81; font: 13px/1.7 monospace; }
+fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+.choice { display: flex; align-items: flex-start; gap: 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px; margin-bottom: 10px; font-size: 14px; line-height: 1.5; cursor: pointer; }
+input { width: 20px; height: 20px; flex-shrink: 0; accent-color: #4338ca; margin: 1px 0; }
+.matches label { display: grid; gap: 10px; margin-bottom: 18px; font-size: 14px; line-height: 1.5; }
+select { width: 100%; min-width: 0; min-height: 48px; border-radius: 10px; padding: 10px; border: 1px solid #cbd5e1; background: #f8fafc; color: #334155; font-size: 16px; }
+ol { list-style: none; margin: 0; padding: 0; }
+li { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding: 12px; margin-bottom: 10px; background: #f8fafc; border-radius: 12px; font-size: 14px; line-height: 1.5; }
+li > span { flex: 1 1 180px; }
+.move-controls { display: flex; gap: 6px; }
+.move-controls button { width: 44px; height: 44px; border: 1px solid #cbd5e1; border-radius: 10px; color: #4338ca; background: white; }
+.check-btn { border: 0; border-radius: 12px; min-height: 48px; padding: 12px 18px; background: linear-gradient(135deg, #4338ca, #2563eb); color: #fff; font-weight: 600; margin-top: 12px; width: 100%; }
+button:disabled { opacity: .55; }
+.feedback { padding: 16px; margin-top: 16px; background: #fff7ed; color: #9a3412; border-radius: 12px; font-size: 14px; }
+.feedback.correct { background: #ecfdf5; color: #166534; }
+.feedback p:last-child { margin-bottom: 0; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }

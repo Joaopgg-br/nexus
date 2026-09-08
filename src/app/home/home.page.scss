@@ -11,7 +11,7 @@ ion-content {
 }
 
 .auth-wrapper {
-  min-height: 100vh;
+  min-height: 100%;
   background: #fff;
 }
 
@@ -36,7 +36,7 @@ ion-content {
   flex-direction: column;
   align-items: center;
 
-  padding-top: 28px;
+  padding-top: calc(28px + env(safe-area-inset-top, 0px));
 
   overflow: visible;
 }
@@ -152,7 +152,7 @@ ion-content {
 ========================= */
 
 .auth-form-container {
-  padding: 90px 32px 32px;
+  padding: 32px clamp(16px, 5vw, 32px) calc(32px + env(safe-area-inset-bottom, 0px));
 }
 
 .form-group {

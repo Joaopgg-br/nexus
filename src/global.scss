@@ -35,7 +35,7 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
-scss// Reset espaçamento padrão dos cards Ionic
+// Reset espaçamento padrão dos cards Ionic
 ion-card {
   margin: 0;
   box-shadow: none;
@@ -47,3 +47,59 @@ ion-toolbar {
   --border-width: 0;
   --color: var(--color-text-primary);
 }
+
+/* Espaço compartilhado com a navegação flutuante, inclusive em aparelhos com notch. */
+:root {
+  --nexus-tab-height: 60px;
+  --nexus-tab-gap: 16px;
+  --nexus-tab-space: calc(var(--nexus-tab-height) + var(--nexus-tab-gap) * 2 + env(safe-area-inset-bottom, 0px));
+}
+
+ion-content.with-tab-bar {
+  --padding-bottom: var(--nexus-tab-space);
+  --padding-top: env(safe-area-inset-top, 0px);
+  --padding-start: env(safe-area-inset-left, 0px);
+  --padding-end: env(safe-area-inset-right, 0px);
+}
+
+ion-content::part(scroll) { scroll-padding-bottom: 24px; }
+button, input, select, textarea { font: inherit; }
+button, a, input, select, textarea { touch-action: manipulation; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 3px solid #6e42ff;
+  outline-offset: 3px;
+}
+h1, h2, h3, p, label, small, .option-text, .course-name { overflow-wrap: anywhere; }
+.lesson-info, .quiz-final-info, .greeting, .search-input { min-width: 0; }
+ion-icon, .activity-icon { flex-shrink: 0; }
+button:disabled { cursor: not-allowed; }
+
+@media (min-width: 768px) {
+  .course-body, .lesson-body, .lesson-header, .activities-header, .activities-list,
+  .profile-card, .dashboard-header, .search-section, .partners-wrapper, .courses-section {
+    max-width: 880px;
+    margin-inline: auto;
+  }
+  .profile-card, .auth-form-container { max-width: 560px; margin-inline: auto; }
+}
+@media (max-width: 380px) {
+  .course-content .course-info-chips { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .activities-content .activity-item { flex-wrap: wrap; }
+  .activities-content .activity-info { flex-basis: calc(100% - 60px); }
+  .activities-content .activity-date { width: 100%; text-align: left; padding-left: 56px; }
+  .quiz-content .navigation-buttons { flex-direction: column; }
+  .quiz-content .question-card { padding: 16px; }
+  .quiz-content .option { gap: 8px; padding: 12px 8px; }
+}
+
+ion-content.dashboard-content.with-tab-bar {
+  --padding-top: calc(12px + env(safe-area-inset-top, 0px));
+  --padding-start: max(20px, env(safe-area-inset-left, 0px));
+  --padding-end: max(20px, env(safe-area-inset-right, 0px));
+}
+
+.answer-review { text-align: left; margin: 24px 0; }
+.answer-review article { padding: 16px; margin: 12px 0; border: 1px solid #e2e8f0; border-radius: 14px; background: #fff; }
+.answer-review strong { color: #4338ca; }
+.answer-review h3 { font-size: 16px; color: #0f172a; }
+.quiz-content, .auth-content { --padding-bottom: env(safe-area-inset-bottom, 0px); }

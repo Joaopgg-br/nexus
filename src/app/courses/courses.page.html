@@ -1,6 +1,6 @@
 <ion-content
   [fullscreen]="true"
-  class="course-content"
+  class="course-content with-tab-bar"
 >
   <div
     class="course-header"
@@ -33,11 +33,7 @@
       <span class="course-tag">
         {{ curso.categoria }}
       </span>
-      <span class="course-rating">
-        <ion-icon name="star"></ion-icon>
-        {{ curso.nota }}
-        ({{ curso.avaliacoes }} avaliações)
-      </span>
+
     </div>
 
     <p class="course-description">
@@ -68,11 +64,13 @@
 
       <div class="info-chip">
         <ion-icon name="flask-outline"></ion-icon>
-        <span>{{ curso.laboratorios }} Labs</span>
+        <span>{{ curso.laboratorios }} práticas</span>
       </div>
     </div>
 
-    <div class="lesson-list">
+    <p *ngIf="carregando" role="status">Carregando progresso...</p>
+    <div *ngIf="mensagemErro" role="alert"><p>{{ mensagemErro }}</p><ion-button (click)="ionViewWillEnter()">Tentar novamente</ion-button></div>
+    <div class="lesson-list" *ngIf="!carregando && !mensagemErro">
       <button
         type="button"
         class="lesson-item"
@@ -98,7 +96,7 @@
           <p>
             {{ aula.capitulo }}
             <span class="dot">•</span>
-            {{ aula.duracao }}
+            {{ aula.duracao }} • {{ curso.praticasDaAula(curso.aulas.indexOf(aula)).length }} prática(s)
           </p>
         </div>
       </button>
@@ -133,8 +131,9 @@
       type="button"
       class="start-course-btn"
       (click)="comecarCurso()"
+      [disabled]="carregando || !!mensagemErro"
     >
-      Começar curso
+      {{ rotuloContinuar }}
     </button>
   </div>
 </ion-content>

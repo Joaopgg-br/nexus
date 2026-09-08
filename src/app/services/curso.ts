@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { PRATICAS, Pratica } from './praticas';
 
 export interface Aula {
   titulo: string;
@@ -14,6 +15,7 @@ export interface PerguntaQuiz {
   pergunta: string;
   opcoes: string[];
   respostaCorreta: number;
+  explicacao: string;
 }
 
 @Injectable({
@@ -22,64 +24,66 @@ export interface PerguntaQuiz {
 export class Curso {
 
   id = 1;
-  nome = 'Introduction to Cybersecurity';
-  categoria = 'Cybersecurity';
+  nome = 'Introdução à Cibersegurança';
+  categoria = 'Cibersegurança';
   imagem = 'assets/ciber.jpg';
   descricao =
-    'Explore o empolgante campo da cibersegurança e entenda por que ela é uma carreira à prova de futuro.';
-  nota = 4.8;
-  avaliacoes = '10.142.339';
+    'Aprenda a analisar ameaças e proteger dados em cinco capítulos com sete práticas guiadas e uma avaliação final. Conteúdo autoral do Nexus.';
   corTema = 'tema-azul';
   gratis = true;
-  cargaHoraria = '6 Horas';
+  cargaHoraria = '60–90 min';
   nivel = 'Iniciante';
-  laboratorios = 7;
+  get laboratorios(): number { return PRATICAS.reduce((total, praticas) => total + praticas.length, 0); }
+
+  praticasDaAula(index: number): Pratica[] { return PRATICAS[index] ?? []; }
+
+  tituloRegistroPratica(pratica: Pratica): string { return `Prática: ${pratica.titulo}`; }
 
   aulas: Aula[] = [
     {
       titulo: 'A necessidade da cibersegurança',
       capitulo: 'Capítulo 1',
-      duracao: '25 min',
+      duracao: '12–18 min',
       bloqueada: false,
       concluida: false,
       textoConteudo:
-        'Nesta aula você vai entender por que a cibersegurança se tornou essencial em um mundo cada vez mais conectado, e quais são os riscos que empresas e pessoas enfrentam diariamente.'
+        'Cibersegurança protege dados e serviços. Confidencialidade significa limitar quem pode consultar uma informação; integridade, impedir ou detectar alterações indevidas; disponibilidade, manter o acesso quando necessário. Um vazamento de prontuários afeta a confidencialidade, uma nota adulterada afeta a integridade e um portal fora do ar afeta a disponibilidade. Um mesmo incidente pode atingir várias propriedades. O princípio do menor privilégio concede apenas o acesso necessário para cada tarefa. Contas individuais, revisão de permissões e remoção de acessos antigos reduzem a exposição. Nas práticas, analise os efeitos dos incidentes e escolha permissões proporcionais ao trabalho.'
     },
     {
       titulo: 'Ataques, conceitos e técnicas',
       capitulo: 'Capítulo 2',
-      duracao: '40 min',
+      duracao: '12–18 min',
       bloqueada: true,
       concluida: false,
       textoConteudo:
-        'Vamos explorar os principais tipos de ataques cibernéticos, como phishing, malware e engenharia social, e as técnicas usadas para se proteger deles.'
+        'Phishing usa mensagens enganosas para induzir uma pessoa a entregar dados, abrir arquivos ou realizar pagamentos. Engenharia social também pode acontecer por telefone. Analise o domínio completo, pedidos inesperados e tentativas de criar urgência; um erro de português sozinho não comprova fraude. HTTPS protege o transporte dos dados, mas também pode existir em sites fraudulentos. Confirme pedidos por um canal oficial que você já conhece. Não informe senhas nem códigos MFA. Malware é software malicioso; ransomware pode bloquear ou criptografar dados e exigir pagamento. Alertas como muitas falhas de autenticação são indícios, não provas isoladas. Preserve registros e investigue o contexto.'
     },
     {
       titulo: 'Protegendo seus dados e privacidade',
       capitulo: 'Capítulo 3',
-      duracao: '35 min',
+      duracao: '12–18 min',
       bloqueada: true,
       concluida: false,
       textoConteudo:
-        'Aprenda boas práticas para proteger dados pessoais e corporativos, incluindo criptografia, autenticação forte e políticas de privacidade.'
+        'Use uma senha longa e exclusiva para cada serviço e um gerenciador de senhas confiável para guardá-la. Ative autenticação multifator quando disponível e mantenha os meios de recuperação protegidos. MFA reduz riscos, mas códigos também podem ser roubados por engenharia social; não os compartilhe. Atualizações corrigem vulnerabilidades conhecidas. Revise permissões de aplicativos e compartilhe somente os dados necessários. Criptografia protege dados contra leitura indevida, mas não resolve todos os riscos de uma conta já comprometida. Tenha cópias de segurança separadas e teste a restauração. Nesta prática, escolha uma combinação de controles; não use suas credenciais reais.'
     },
     {
       titulo: 'Protegendo a organização',
       capitulo: 'Capítulo 4',
-      duracao: '50 min',
+      duracao: '12–18 min',
       bloqueada: true,
       concluida: false,
       textoConteudo:
-        'Como estruturar uma política de segurança organizacional, incluindo firewalls, backups e treinamento de equipe.'
+        'Uma organização precisa combinar pessoas, processos e tecnologia. Firewalls permitem ou negam tráfego segundo regras; a política de negar por padrão libera somente os fluxos necessários. HTTPS costuma usar TCP 443 e SSH, TCP 22. Publicar um portal não exige expor a administração para toda a Internet. Separar redes de visitantes, usuários e gestão reduz movimentos indevidos. A administração remota pode ser limitada a uma rede de gestão acessada por VPN, com autenticação forte. Firewalls não substituem correções de vulnerabilidades nem validação da aplicação. Backups separados, testes de restauração e treinamento também fazem parte da proteção. Revise as regras do cenário a seguir.'
     },
     {
       titulo: 'Estado da cibersegurança',
       capitulo: 'Capítulo 5',
-      duracao: '30 min',
+      duracao: '12–18 min',
       bloqueada: true,
       concluida: false,
       textoConteudo:
-        'Um panorama do cenário atual da cibersegurança no mundo e as tendências para os próximos anos.'
+        'A segurança exige acompanhamento contínuo: inventário de ativos, análise de alertas, correções e revisão de acessos. Uma equipe de resposta a incidentes usa um procedimento para conter danos, preservar evidências, investigar a causa e recuperar serviços com segurança. Não apague registros nem restaure sistemas sem coordenação: isso pode destruir evidências ou reiniciar o problema. A ordem detalhada depende do incidente e do plano da organização. Neste cenário, o procedimento autoriza isolar a rede e avisar a equipe imediatamente. Depois, a equipe investiga e trata a causa antes de validar a recuperação. A revisão final transforma o que foi aprendido em melhorias. Na avaliação final, justifique suas decisões usando os conceitos das aulas.'
     }
   ];
 
@@ -89,54 +93,46 @@ export class Curso {
 
   perguntasQuiz: PerguntaQuiz[] = [
     {
-      pergunta: 'O que é phishing?',
-      opcoes: [
-        'Um tipo de backup automático',
-        'Uma técnica de fraude para obter informações',
-        'Um sistema de criptografia',
-        'Um antivírus para computadores'
-      ],
-      respostaCorreta: 1
+      pergunta: 'Você recebe um aviso urgente pedindo senha e código MFA em um domínio diferente do portal conhecido. Qual é a melhor ação?',
+      opcoes: ['Enviar apenas o código MFA.', 'Validar pelo portal oficial e reportar a mensagem.', 'Confiar porque o link usa HTTPS.', 'Encaminhar para todos clicarem e verificarem.'],
+      respostaCorreta: 1,
+      explicacao: 'Confirme o pedido por um canal conhecido. Domínio divergente, urgência e pedido de segredos são indícios de phishing; HTTPS não comprova legitimidade.'
     },
     {
-      pergunta: 'Qual destas é uma boa prática de segurança?',
-      opcoes: [
-        'Usar a mesma senha em todos os sites',
-        'Compartilhar sua senha com colegas',
-        'Ativar a autenticação de dois fatores',
-        'Desativar atualizações do sistema'
-      ],
-      respostaCorreta: 2
+      pergunta: 'Uma funcionária precisa somente consultar relatórios. Qual permissão atende ao menor privilégio?',
+      opcoes: ['Administradora do sistema.', 'Conta compartilhada da equipe.', 'Conta individual com leitura dos relatórios necessários.', 'Exportação de toda a base de clientes.'],
+      respostaCorreta: 2,
+      explicacao: 'Acesso individual e restrito à leitura necessária reduz exposição e permite rastrear ações.'
     },
     {
-      pergunta: 'O que é malware?',
-      opcoes: [
-        'Um software desenvolvido para causar danos ou realizar ações maliciosas',
-        'Um equipamento usado para proteger redes',
-        'Um tipo de senha segura',
-        'Um protocolo utilizado para enviar e-mails'
-      ],
-      respostaCorreta: 0
+      pergunta: 'As notas de uma turma foram alteradas sem autorização, mas o portal continua online. Qual propriedade foi diretamente afetada?',
+      opcoes: ['Integridade.', 'Disponibilidade apenas.', 'Velocidade da rede.', 'Nenhuma, pois o portal continua online.'],
+      respostaCorreta: 0,
+      explicacao: 'Integridade trata da exatidão dos dados e da proteção contra modificações indevidas.'
     },
     {
-      pergunta: 'Qual é uma das principais funções de um firewall?',
-      opcoes: [
-        'Aumentar a velocidade do processador',
-        'Controlar o tráfego de rede com base em regras',
-        'Criar senhas automaticamente',
-        'Armazenar arquivos pessoais'
-      ],
-      respostaCorreta: 1
+      pergunta: 'Um servidor oferece apenas um portal HTTPS. SSH é permitido somente pela rede de gestão via VPN. Qual regra deve ser bloqueada?',
+      opcoes: ['Internet → TCP 443.', 'Rede de gestão → TCP 22.', 'Retorno das conexões HTTPS autorizadas.', 'Internet → TCP 22.'],
+      respostaCorreta: 3,
+      explicacao: 'A administração por SSH deve seguir o caminho autorizado da rede de gestão, sem exposição direta à Internet.'
     },
     {
-      pergunta: 'Qual atitude ajuda a proteger dados pessoais?',
-      opcoes: [
-        'Clicar em qualquer link recebido',
-        'Usar senhas fortes e autenticação adicional',
-        'Desativar o antivírus',
-        'Publicar informações pessoais em sites desconhecidos'
-      ],
-      respostaCorreta: 1
+      pergunta: 'Um notebook começou a criptografar arquivos. O procedimento interno autoriza isolar a rede e avisar a equipe. O que fazer primeiro?',
+      opcoes: ['Restaurar o backup enquanto ele permanece conectado.', 'Isolar da rede e acionar a equipe para conter e investigar.', 'Apagar todos os registros.', 'Publicar os arquivos afetados em uma rede social.'],
+      respostaCorreta: 1,
+      explicacao: 'Nesse cenário, contenção e aviso imediato limitam danos. Investigação e tratamento da causa precedem a restauração validada.'
+    },
+    {
+      pergunta: 'Uma senha vazou em outro site. Que configuração reduz a chance de esse vazamento dar acesso à sua conta de estudos?',
+      opcoes: ['A mesma senha com uma letra maiúscula.', 'Desativar atualizações.', 'Senha exclusiva e autenticação multifator.', 'Compartilhar códigos de recuperação com colegas.'],
+      respostaCorreta: 2,
+      explicacao: 'Senhas exclusivas evitam reutilização de credenciais vazadas; MFA acrescenta uma camada de proteção.'
+    },
+    {
+      pergunta: 'Um painel registrou centenas de falhas de autenticação, sem nenhum sucesso confirmado. O que essa evidência permite afirmar?',
+      opcoes: ['Existe um indício de tentativa de acesso que precisa de investigação.', 'Os dados foram necessariamente roubados.', 'É seguro apagar os registros.', 'A conta deve ser divulgada publicamente.'],
+      respostaCorreta: 0,
+      explicacao: 'Falhas repetidas são indícios; não comprovam acesso bem-sucedido nem vazamento. Preserve registros e investigue o contexto.'
     }
   ];
 
@@ -147,7 +143,7 @@ export class Curso {
   marcarAulaConcluida(index: number): boolean {
     const aulaAtual = this.aulas[index];
 
-    if (!aulaAtual || aulaAtual.concluida) {
+    if (!aulaAtual || aulaAtual.bloqueada || aulaAtual.concluida) {
       return false;
     }
 
@@ -170,7 +166,7 @@ export class Curso {
 
     this.aulas.forEach((aula, index) => {
       aula.concluida = concluidas.has(index);
-      aula.bloqueada = index !== 0;
+      aula.bloqueada = index !== 0 && !aula.concluida;
     });
 
     this.aulas.forEach((aula, index) => {

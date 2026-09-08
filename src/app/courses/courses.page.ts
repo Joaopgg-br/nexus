@@ -11,6 +11,12 @@ import { SupabaseService } from '../services/supabase.service';
   standalone: false
 })
 export class CoursesPage {
+  carregando = true;
+  mensagemErro = '';
+
+  get rotuloContinuar(): string {
+    return this.curso.quizLiberado ? 'Abrir avaliação final' : this.curso.aulas.some(a => a.concluida) ? 'Continuar curso' : 'Começar curso';
+  }
 
   constructor(
     private readonly router: Router,
@@ -19,6 +25,10 @@ export class CoursesPage {
   ) {}
 
   async ionViewWillEnter(): Promise<void> {
+    this.carregando = true;
+    this.mensagemErro = '';
+    this.curso.restaurarProgresso([]);
+    this.curso.resetarQuiz();
     try {
       const historico =
         await this.supabase.buscarHistorico();
@@ -34,11 +44,10 @@ export class CoursesPage {
       this.curso.restaurarProgresso(
         aulasConcluidas
       );
-    } catch (error) {
-      console.error(
-        'Não foi possível restaurar o progresso.',
-        error
-      );
+    } catch {
+      this.mensagemErro = 'Não foi possível carregar seu progresso.';
+    } finally {
+      this.carregando = false;
     }
   }
 
@@ -47,7 +56,7 @@ export class CoursesPage {
   }
 
   abrirAula(aula: Aula): void {
-    if (aula.bloqueada) {
+    if (this.carregando || this.mensagemErro || aula.bloqueada) {
       return;
     }
 
@@ -68,6 +77,8 @@ export class CoursesPage {
   }
 
   async comecarCurso(): Promise<void> {
+    if (this.carregando || this.mensagemErro) { return; }
+    if (this.curso.quizLiberado) { this.abrirQuiz(); return; }
     try {
       await this.supabase.registrarAtividade({
         tipo: 'curso_iniciado',
@@ -82,6 +93,7 @@ export class CoursesPage {
       );
     }
 
-    await this.router.navigate(['/lesson', 0]);
+    const indice = this.curso.aulas.findIndex(a => !a.concluida && !a.bloqueada);
+    await this.router.navigate(['/lesson', Math.max(0, indice)]);
   }
 }

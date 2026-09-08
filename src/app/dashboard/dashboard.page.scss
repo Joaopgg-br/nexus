@@ -8,10 +8,10 @@
 
 .dashboard-content {
   --background: #ffffff;
-  --padding-start: 20px;
-  --padding-end: 20px;
-  --padding-top: 12px;
-  --padding-bottom: 100px;
+  --padding-start: max(20px, env(safe-area-inset-left, 0px));
+  --padding-end: max(20px, env(safe-area-inset-right, 0px));
+  --padding-top: calc(12px + env(safe-area-inset-top, 0px));
+
 }
 
 /* ===== HEADER ===== */
@@ -197,57 +197,6 @@
   }
 }
 
-/* ===== BOTTOM NAV ===== */
-.bottom-nav {
-  position: fixed;
-  bottom: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 28px;
-  background: #ffffff;
-  padding: 10px 24px;
-  border-radius: 40px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-  z-index: 10;
-
-  .nav-item {
-    background: transparent;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-
-    ion-icon {
-      font-size: 22px;
-      color: var(--purple);
-      opacity: 0.6;
-    }
-
-    &.active {
-      opacity: 1;
-    }
-
-    .nav-home-btn {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--gradient);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 8px 16px rgba(123, 47, 247, 0.35);
-
-      ion-icon {
-        color: #fff;
-        opacity: 1;
-        font-size: 22px;
-      }
-    }
-  }
-}
 .course-thumbnail.thumb-cyber {
   background: linear-gradient(135deg, #4338ca, #2563eb);
 }

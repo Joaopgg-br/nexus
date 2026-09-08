@@ -2,7 +2,7 @@
   [fullscreen]="true"
   [scrollY]="true"
   [scrollX]="false"
-  class="dashboard-content"
+  class="dashboard-content with-tab-bar"
 >
   <div class="dashboard-header">
     <div class="greeting">
@@ -67,6 +67,9 @@
     >
       <ion-card
         class="course-card"
+        role="button" tabindex="0"
+        (keydown.enter)="abrirCurso(curso)"
+        (keydown.space)="$event.preventDefault(); abrirCurso(curso)"
         *ngFor="let curso of cursosFiltrados"
         (click)="abrirCurso(curso)"
       >

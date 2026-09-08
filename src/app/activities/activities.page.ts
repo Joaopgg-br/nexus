@@ -28,6 +28,7 @@ export class ActivitiesPage {
 
   async carregarHistorico(): Promise<void> {
     this.carregando = true;
+    this.historico = [];
     this.mensagemErro = '';
 
     try {
@@ -61,7 +62,7 @@ export class ActivitiesPage {
       curso_iniciado: 'Início',
       aula_acessada: 'Aula',
       aula_concluida: 'Conclusão',
-      quiz_concluido: 'Quiz',
+      quiz_concluido: 'Prática / avaliação',
       curso_concluido: 'Curso concluído'
     };
 

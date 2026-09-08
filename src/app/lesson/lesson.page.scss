@@ -6,15 +6,16 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 16px;
+  padding: calc(16px + env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) 16px max(16px, env(safe-area-inset-left, 0px));
   background: #fff;
   position: sticky;
   top: 0;
   z-index: 5;
 
   .icon-btn {
-    width: 38px;
-    height: 38px;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     background: #f4f6fb;
     border: none;
@@ -35,24 +36,8 @@
   }
 }
 
-.video-wrapper {
-  position: relative;
-  width: 100%;
-  padding-top: 56.25%; // 16:9
-  background: #000;
-
-  iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-  }
-}
-
 .lesson-body {
-  padding: 24px 20px 40px;
+  padding: 24px max(20px, env(safe-area-inset-right, 0px)) calc(40px + env(safe-area-inset-bottom, 0px)) max(20px, env(safe-area-inset-left, 0px));
   background: #fff;
 }
 
@@ -142,3 +127,6 @@
   text-align: center;
   color: #6b7280;
 }
+.complete-btn:disabled { opacity: .5; }
+.lesson-error { color: #b91c1c; background: #fef2f2; padding: 12px; border-radius: 12px; }
+.practice-progress { color: #4338ca; font-weight: 600; }

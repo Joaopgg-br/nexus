@@ -91,19 +91,7 @@
     border-radius: 20px;
   }
 
-  .course-rating {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 13px;
-    font-weight: 600;
-    color: #6b7280;
 
-    ion-icon {
-      color: #f59e0b;
-      font-size: 15px;
-    }
-  }
 }
 
 .course-description {
@@ -116,7 +104,7 @@
 // ===== CHIPS =====
 .course-info-chips {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
   margin-bottom: 28px;
 
@@ -236,7 +224,7 @@
 
   gap: 16px;
 
-  margin-top: 20px;
+  margin: 20px 0;
   padding: 18px 20px;
 
   background: #ffffff;

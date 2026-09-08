@@ -5,7 +5,7 @@
     <ion-buttons slot="start">
 
       <ion-button
-        (click)="voltarCurso()"
+        (click)="voltarCurso()" aria-label="Voltar ao curso"
       >
         <ion-icon
           name="arrow-back-outline"
@@ -24,9 +24,11 @@
 
 
 <ion-content
-  [fullscreen]="true"
+  [fullscreen]="false"
   class="quiz-content"
 >
+  <div class="quiz-container" *ngIf="carregando" role="status"><ion-spinner name="crescent"></ion-spinner><p>Carregando avaliação...</p></div>
+  <div class="quiz-container" *ngIf="erroCarregamento" role="alert"><p>{{ erroCarregamento }}</p><ion-button (click)="ionViewWillEnter()">Tentar novamente</ion-button></div>
 
 
   <!-- ========================= -->
@@ -111,6 +113,8 @@
       <div class="options">
 
         <button
+          type="button"
+          [attr.aria-pressed]="respostaSelecionada === i"
           class="option"
           *ngFor="
             let opcao of perguntas[perguntaAtual].opcoes;
@@ -170,7 +174,7 @@
       <ion-button
         class="next-button"
         (click)="proximaPergunta()"
-        [disabled]="respostaSelecionada === null"
+        [disabled]="respostaSelecionada === null || salvando"
       >
 
         {{
@@ -286,7 +290,19 @@
     </div>
 
 
-    <p class="history-error" *ngIf="erroRegistro">{{ erroRegistro }}</p>
+    <p role="status" *ngIf="salvando">Salvando resultado...</p>
+    <p role="status" *ngIf="registroSalvo">Resultado salvo no seu histórico.</p>
+    <div *ngIf="erroRegistro" role="alert"><p class="history-error">{{ erroRegistro }}</p><ion-button (click)="salvarResultado()" [disabled]="salvando">Tentar salvar novamente</ion-button></div>
+    <div class="answer-review">
+      <h2>Revisão das respostas</h2>
+      <article *ngFor="let pergunta of perguntas; let i = index">
+        <strong>{{ respostas[i] === pergunta.respostaCorreta ? '✓ Correta' : '↻ Revisar' }} · Questão {{ i + 1 }}</strong>
+        <h3>{{ pergunta.pergunta }}</h3>
+        <p>Sua resposta: {{ pergunta.opcoes[respostas[i]] }}</p>
+        <p *ngIf="respostas[i] !== pergunta.respostaCorreta">Resposta correta: {{ pergunta.opcoes[pergunta.respostaCorreta] }}</p>
+        <p>{{ pergunta.explicacao }}</p>
+      </article>
+    </div>
 
 
     <!-- Botões -->
@@ -297,6 +313,7 @@
         expand="block"
         class="retry-button"
         (click)="refazerQuiz()"
+        [disabled]="salvando"
       >
 
         <ion-icon

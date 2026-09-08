@@ -85,6 +85,11 @@ export class SupabaseService {
   }
 
   async registrarAtividade(atividade: NovaAtividade): Promise<void> {
+    return this.registrarAtividades([atividade]);
+  }
+
+  async registrarAtividades(atividades: NovaAtividade[]): Promise<void> {
+    if (atividades.length === 0) { return; }
     const { data, error } = await this.usuarioAtual();
 
     if (error) {
@@ -97,14 +102,14 @@ export class SupabaseService {
 
     const { error: insertError } = await this.supabase
       .from('historico')
-      .insert({
+      .insert(atividades.map(atividade => ({
         usuario_id: data.user.id,
         tipo: atividade.tipo,
         titulo: atividade.titulo,
         descricao: atividade.descricao ?? null,
         curso_id: atividade.cursoId ?? null,
         aula_indice: atividade.aulaIndice ?? null
-      });
+      })));
 
     if (insertError) {
       throw insertError;

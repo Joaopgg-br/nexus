@@ -5,6 +5,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { LessonPageRoutingModule } from './lesson-routing.module';
 
+import { PraticaComponent } from '../components/pratica/pratica.component';
+
 import { LessonPage } from './lesson.page';
 
 @NgModule({
@@ -14,6 +16,6 @@ import { LessonPage } from './lesson.page';
     IonicModule,
     LessonPageRoutingModule
   ],
-  declarations: [LessonPage]
+  declarations: [LessonPage, PraticaComponent]
 })
 export class LessonPageModule {}

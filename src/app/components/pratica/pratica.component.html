@@ -1,0 +1,45 @@
+<section class="practice-card" [attr.aria-labelledby]="pratica.id + '-titulo'">
+  <div class="practice-label"><ion-icon name="flask-outline" aria-hidden="true"></ion-icon> Prática guiada <span *ngIf="concluida">• Concluída</span></div>
+  <h2 [id]="pratica.id + '-titulo'">{{ pratica.titulo }}</h2>
+  <p class="objective">{{ pratica.objetivo }}</p>
+  <p>{{ pratica.cenario }}</p>
+  <pre *ngIf="pratica.evidencia">{{ pratica.evidencia }}</pre>
+  <ng-container *ngIf="!concluida; else resumo">
+    <p class="instruction">{{ pratica.instrucao }}</p>
+    <fieldset *ngIf="pratica.tipo === 'multipla'" [disabled]="bloqueada">
+      <legend class="sr-only">{{ pratica.instrucao }}</legend>
+      <label class="choice" *ngFor="let opcao of pratica.opcoes">
+        <input type="checkbox" [checked]="resposta.escolhas.includes(opcao.id)" (change)="selecionar(opcao.id)" />
+        <span>{{ opcao.texto }}</span>
+      </label>
+    </fieldset>
+    <div *ngIf="pratica.tipo === 'associacao'" class="matches">
+      <label *ngFor="let item of pratica.itens">
+        <span>{{ item.texto }}</span>
+        <select [(ngModel)]="resposta.associacoes[item.id]" (ngModelChange)="verificada = false" [disabled]="bloqueada">
+          <option [ngValue]="undefined" disabled>Escolha uma resposta</option>
+          <option *ngFor="let opcao of pratica.opcoes" [value]="opcao.id">{{ opcao.texto }}</option>
+        </select>
+      </label>
+    </div>
+    <ol *ngIf="pratica.tipo === 'ordem'">
+      <li *ngFor="let id of resposta.ordem; let i = index">
+        <span>{{ i + 1 }}. {{ texto(id) }}</span>
+        <div class="move-controls">
+          <button type="button" (click)="mover(i, -1)" [disabled]="i === 0 || bloqueada" [attr.aria-label]="'Mover para cima: ' + texto(id)"><ion-icon name="arrow-up-outline" aria-hidden="true"></ion-icon></button>
+          <button type="button" (click)="mover(i, 1)" [disabled]="i === resposta.ordem.length - 1 || bloqueada" [attr.aria-label]="'Mover para baixo: ' + texto(id)"><ion-icon name="arrow-down-outline" aria-hidden="true"></ion-icon></button>
+        </div>
+      </li>
+    </ol>
+    <div *ngIf="verificada" class="feedback" [class.correct]="correta" role="status">
+      <strong>{{ correta ? 'Decisões corretas!' : 'Revise suas decisões e tente novamente.' }}</strong>
+      <p>{{ pratica.explicacao }}</p>
+      <ng-container *ngIf="pratica.tipo === 'associacao'">
+        <p *ngFor="let item of pratica.itens">{{ resposta.associacoes[item.id] === item.resposta ? '✓' : '↻' }} {{ item.explicacao }}</p>
+      </ng-container>
+    </div>
+    <button class="check-btn" type="button" (click)="verificar()" [disabled]="!respondida || bloqueada">{{ salvando ? 'Salvando resultado...' : correta ? 'Prática resolvida' : 'Verificar respostas' }}</button>
+    <div *ngIf="erro" class="feedback" role="alert"><p>{{ erro }}</p><button type="button" class="check-btn" (click)="aprovada.emit()" [disabled]="salvando">Tentar salvar novamente</button></div>
+  </ng-container>
+  <ng-template #resumo><div class="feedback correct"><strong>Conclusão salva no seu histórico.</strong><p>{{ pratica.explicacao }}</p></div></ng-template>
+</section>

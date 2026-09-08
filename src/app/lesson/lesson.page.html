@@ -1,111 +1,24 @@
-<ion-content
-  [fullscreen]="true"
-  class="lesson-content"
-  *ngIf="aula"
->
+<ion-content class="lesson-content">
   <div class="lesson-header">
-    <button
-      type="button"
-      class="icon-btn"
-      (click)="voltar()"
-    >
-      <ion-icon name="arrow-back"></ion-icon>
-    </button>
-    <span class="course-name">
-      {{ curso.nome }}
-    </span>
+    <button type="button" class="icon-btn" (click)="voltar()" aria-label="Voltar ao curso"><ion-icon name="arrow-back" aria-hidden="true"></ion-icon></button>
+    <span class="course-name">{{ curso.nome }}</span>
   </div>
-
-  <div
-    class="video-wrapper"
-    *ngIf="videoSeguro"
-  >
-    <iframe
-      [src]="videoSeguro"
-      frameborder="0"
-      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen
-    ></iframe>
-  </div>
-
   <div class="lesson-body">
-    <p class="lesson-chapter">
-      {{ aula.capitulo }}
-      <span class="dot">•</span>
-      {{ aula.duracao }}
-    </p>
-
-    <h1 class="lesson-title">
-      {{ aula.titulo }}
-    </h1>
-
-    <div class="lesson-text">
-      <p>{{ aula.textoConteudo }}</p>
-    </div>
-
-    <div class="lesson-nav">
-      <button
-        type="button"
-        class="nav-btn secondary"
-        [disabled]="!temAulaAnterior()"
-        (click)="aulaAnterior()"
-      >
-        <ion-icon
-          name="chevron-back-outline"
-        ></ion-icon>
-        Anterior
-      </button>
-
-      <button
-        type="button"
-        class="nav-btn secondary"
-        [disabled]="!temProximaAula()"
-        (click)="proximaAula()"
-      >
-        Próxima
-        <ion-icon
-          name="chevron-forward-outline"
-        ></ion-icon>
-      </button>
-    </div>
-
-    <p
-      class="lesson-error"
-      *ngIf="mensagemErro"
-    >
-      {{ mensagemErro }}
-    </p>
-
-    <button
-      type="button"
-      class="complete-btn"
-      [disabled]="aula.concluida"
-      (click)="marcarConcluida()"
-    >
-      <ion-icon
-        name="checkmark-circle-outline"
-      ></ion-icon>
-      {{
-        aula.concluida
-          ? 'Aula concluída'
-          : 'Marcar como concluída'
-      }}
-    </button>
+    <div *ngIf="carregando" role="status"><ion-spinner name="crescent"></ion-spinner><p>Carregando aula e práticas...</p></div>
+    <div *ngIf="mensagemErro" class="lesson-error" role="alert"><p>{{ mensagemErro }}</p><ion-button *ngIf="!aula" (click)="carregarAula()">Tentar novamente</ion-button></div>
+    <ng-container *ngIf="aula && !carregando">
+      <p class="lesson-chapter">{{ aula.capitulo }} • {{ aula.duracao }}</p>
+      <h1 class="lesson-title">{{ aula.titulo }}</h1>
+      <div class="lesson-text"><p>{{ aula.textoConteudo }}</p></div>
+      <p class="practice-progress" role="status">{{ concluidas.size }} de {{ praticas.length }} práticas salvas</p>
+      <app-pratica *ngFor="let pratica of praticas" [pratica]="pratica" [concluida]="concluidas.has(pratica.id)" [salvando]="salvandoPraticas.has(pratica.id)" [erro]="errosPraticas[pratica.id] || ''" (aprovada)="salvarPratica(pratica)"></app-pratica>
+      <div class="lesson-nav">
+        <button type="button" class="nav-btn secondary" [disabled]="!temAulaAnterior() || salvando" (click)="aulaAnterior()"><ion-icon name="chevron-back-outline" aria-hidden="true"></ion-icon>Anterior</button>
+        <button type="button" class="nav-btn secondary" [disabled]="!temProximaAula() || salvando" (click)="proximaAula()">Próxima<ion-icon name="chevron-forward-outline" aria-hidden="true"></ion-icon></button>
+      </div>
+      <p *ngIf="!podeConcluir && !aula.concluida && !salvando">Resolva e salve todas as práticas para concluir esta aula.</p>
+      <button type="button" class="complete-btn" [disabled]="!podeConcluir || aula.concluida" (click)="marcarConcluida()"><ion-icon name="checkmark-circle-outline" aria-hidden="true"></ion-icon>{{ salvando ? 'Salvando...' : aula.concluida ? 'Aula concluída' : 'Concluir aula e continuar' }}</button>
+      <ion-button *ngIf="aula.concluida && curso.quizLiberado" expand="block" routerLink="/quiz">Abrir avaliação final</ion-button>
+    </ng-container>
   </div>
-</ion-content>
-
-<ion-content
-  *ngIf="!carregando && !aula"
-  class="lesson-content lesson-empty"
->
-  <p>
-    Aula não encontrada ou ainda bloqueada.
-  </p>
-  <button
-    type="button"
-    class="nav-btn secondary"
-    (click)="voltar()"
-  >
-    Voltar ao curso
-  </button>
 </ion-content>
