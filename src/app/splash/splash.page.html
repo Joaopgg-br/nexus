@@ -1,22 +1,28 @@
 <ion-content [fullscreen]="true" [scrollY]="false" class="splash">
-  <div class="splash-stage">
-    <p class="eyebrow">APRENDA. CONECTE. EVOLUA.</p>
+  <div class="splash-stage" [class.leaving]="leaving">
+    <div class="atmosphere" aria-hidden="true">
+      <div class="glow glow-blue"></div>
+      <div class="glow glow-purple"></div>
+      <div class="digital-grid"></div>
+    </div>
+
     <div class="brand">
       <div class="emblem" aria-hidden="true">
         <div class="orbit orbit-outer"></div>
         <div class="orbit orbit-inner"></div>
-        <div class="logo-tile">
+        <div class="logo-disc">
           <ion-icon name="compass-outline"></ion-icon>
         </div>
-        <span class="spark spark-blue"></span>
-        <span class="spark spark-purple"></span>
       </div>
-      <h1>Nexus<span aria-hidden="true">.</span></h1>
-      <p class="tagline">Seu próximo passo<br>começa aqui.</p>
+      <h1>Nexus</h1>
+      <p class="tagline">Conhecimento que conecta.</p>
     </div>
+
     <div class="loading" role="status" aria-live="polite">
-      <div class="loading-track" aria-hidden="true"><span></span></div>
-      <p>Preparando seu espaço</p>
+      <div class="loading-dots" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+      <p>Abrindo seu espaço</p>
     </div>
   </div>
 </ion-content>

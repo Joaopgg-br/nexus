@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { SupabaseService } from '../services/supabase.service';
@@ -9,25 +9,38 @@ import { SupabaseService } from '../services/supabase.service';
   styleUrls: ['./splash.page.scss'],
   standalone: false
 })
-export class SplashPage implements OnInit {
+export class SplashPage implements OnInit, OnDestroy {
+  leaving = false;
+  private destination = '/home';
+  private timer?: ReturnType<typeof setTimeout>;
+  private destroyed = false;
 
   constructor(
     private readonly router: Router,
     private readonly supabase: SupabaseService
   ) {}
 
-  async ngOnInit(): Promise<void> {
-    await new Promise(resolve =>
-      setTimeout(resolve, 1200)
-    );
+  ngOnInit(): void {
+    // Resolve the session during the animation, without delaying the splash.
+    void this.supabase.sessaoAtual().then(({ data, error }) => {
+      if (!this.destroyed && !this.leaving && !error && data.session) {
+        this.destination = '/dashboard';
+      }
+    }).catch(() => {
+      // Login remains available when the saved session cannot be restored.
+    });
 
-    const { data } = await this.supabase.sessaoAtual();
-    const destino =
-      data.session ? '/dashboard' : '/home';
+    // 2.3 seconds for the entrance, then 300 ms for the exit fade.
+    this.timer = setTimeout(() => {
+      this.leaving = true;
+      this.timer = setTimeout(() => {
+        void this.router.navigateByUrl(this.destination, { replaceUrl: true });
+      }, 300);
+    }, 2300);
+  }
 
-    await this.router.navigateByUrl(
-      destino,
-      { replaceUrl: true }
-    );
+  ngOnDestroy(): void {
+    this.destroyed = true;
+    clearTimeout(this.timer);
   }
 }
