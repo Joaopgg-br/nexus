@@ -1,183 +1,140 @@
-.splash {
-
-  --background:
-  linear-gradient(
-    160deg,
-    #4b8df8,
-    #312e81
-  );
-
+:host {
+  --nexus-blue: #4a6cf7;
+  --nexus-purple: #7b2ff7;
 }
 
+.splash { --background: #fafaff; }
 
-.splash-container {
-
-  height:100%;
-
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-
-  color:white;
-
+.splash-stage {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  min-height: 320px;
+  padding: max(36px, env(safe-area-inset-top)) 24px max(32px, env(safe-area-inset-bottom));
+  overflow: hidden;
+  text-align: center;
+  color: #272044;
+  background:
+    radial-gradient(ellipse at 0 15%, #4a6cf715, transparent 55%),
+    radial-gradient(ellipse at 100% 80%, #7b2ff712, transparent 55%);
 }
 
-
-.logo-animation {
-
-  animation:
-  logoEnter 1.8s ease forwards;
-
+.eyebrow {
+  margin: 0;
+  color: #706888;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2.6px;
 }
 
+.brand { animation: arrive .65s ease-out both; }
 
-.logo-icon {
-
-  width:120px;
-  height:120px;
-
-  border-radius:50%;
-
-  background:white;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  box-shadow:
-  0 20px 50px rgba(0,0,0,.35);
-
+.emblem {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 224px;
+  height: 224px;
+  margin: 0 auto 14px;
 }
 
+.orbit {
+  position: absolute;
+  border: 1px solid #7662d514;
+  border-radius: 50%;
+}
+.orbit-outer { inset: 0; }
+.orbit-inner { inset: 24px; border-style: dashed; }
 
-.logo-icon ion-icon {
-
-  color:#312e81;
-
-  font-size:70px;
-
+.logo-tile {
+  display: grid;
+  place-items: center;
+  width: 112px;
+  height: 112px;
+  border-radius: 34px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--nexus-blue), var(--nexus-purple));
+  box-shadow: 0 20px 45px #6844dd30, inset 0 1px 0 #ffffff50;
+  transform: rotate(-8deg);
+  ion-icon { font-size: 64px; transform: rotate(8deg); }
 }
 
+.spark {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 6px #ffffffb0;
+}
+.spark-blue { top: 30px; right: 28px; background: var(--nexus-blue); }
+.spark-purple { bottom: 45px; left: 32px; width: 6px; height: 6px; background: var(--nexus-purple); }
 
 h1 {
-
-  margin-top:25px;
-
-  font-size:35px;
-
-  opacity:0;
-
-  animation:
-  textShow 1s ease forwards;
-
-  animation-delay:.8s;
-
+  margin: 0;
+  font-size: clamp(48px, 10vw, 62px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -2.5px;
+  span { color: var(--nexus-purple); }
 }
 
-
-p {
-
- opacity:0;
-
- animation:
- textShow 1s ease forwards;
-
- animation-delay:1s;
-
+.tagline {
+  margin: 18px 0 0;
+  font-size: 17px;
+  line-height: 1.6;
+  color: #706888;
 }
-
 
 .loading {
-
- margin-top:30px;
-
- display:flex;
- gap:8px;
-
+  margin-top: 24px;
+  p { margin: 14px 0 0; color: #706888; font-size: 11px; letter-spacing: .5px; }
+}
+.loading-track {
+  width: 112px;
+  height: 3px;
+  margin: auto;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #e5e2f3;
+  span {
+    display: block;
+    width: 45%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, var(--nexus-blue), var(--nexus-purple));
+    animation: loading 1.1s ease-in-out infinite;
+  }
 }
 
-
-.loading span {
-
- width:8px;
- height:8px;
-
- background:white;
-
- border-radius:50%;
-
- animation:
- dots .8s infinite alternate;
-
+@keyframes arrive {
+  from { opacity: 0; transform: translateY(12px) scale(.97); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes loading {
+  from { transform: translateX(-110%); }
+  to { transform: translateX(230%); }
 }
 
-
-.loading span:nth-child(2){
-
- animation-delay:.2s;
-
+@media (max-height: 580px) {
+  .splash-stage { padding-top: 20px; padding-bottom: 20px; }
+  .emblem { width: 150px; height: 150px; margin-bottom: 10px; }
+  .logo-tile { width: 86px; height: 86px; border-radius: 26px; }
+  .logo-tile ion-icon { font-size: 50px; }
+  .tagline { margin-top: 10px; font-size: 14px; }
+  .loading { margin-top: 16px; }
 }
-
-
-.loading span:nth-child(3){
-
- animation-delay:.4s;
-
+@media (prefers-reduced-motion: reduce) {
+  .brand, .loading-track span { animation: none; }
+  .loading-track span { width: 100%; }
 }
-
-
-
-@keyframes logoEnter {
-
-
-0%{
-
- transform:
- scale(.2)
- rotate(-180deg);
-
- opacity:0;
-
-}
-
-
-100%{
-
- transform:
- scale(1)
- rotate(0);
-
- opacity:1;
-
-}
-
-
-}
-
-
-
-@keyframes textShow {
-
-
-to{
-
- opacity:1;
-
-}
-
-}
-
-
-
-@keyframes dots {
-
-
-to{
-
- transform:translateY(-10px);
-
-}
-
-
+@media (max-height: 420px) {
+  .emblem { width: 100px; height: 100px; }
+  .logo-tile { width: 64px; height: 64px; border-radius: 20px; }
+  .logo-tile ion-icon { font-size: 40px; }
+  h1 { font-size: 40px; }
+  .tagline { font-size: 12px; margin-top: 8px; }
 }
