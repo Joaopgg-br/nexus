@@ -1,3 +1,4 @@
+import { MoodleService } from '../services/moodle.service';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -29,6 +30,7 @@ export class DashboardPage {
   constructor(
     private readonly router: Router,
     private readonly supabase: SupabaseService,
+    public readonly moodle: MoodleService,
     curso: Curso
   ) {
     this.cursos = [{
@@ -42,6 +44,7 @@ export class DashboardPage {
   }
 
   async ionViewWillEnter(): Promise<void> {
+    void this.moodle.executar('status');
     const { data } = await this.supabase.usuarioAtual();
     const metadata = data.user?.user_metadata;
 

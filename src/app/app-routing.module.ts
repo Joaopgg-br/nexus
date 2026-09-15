@@ -31,6 +31,8 @@ const routes: Routes = [
         m => m.DashboardPageModule
       )
   },
+  { path: 'library', canActivate: [AuthGuard], loadComponent: () => import('./library/library.page').then(m => m.LibraryPage) },
+  { path: 'integrations', canActivate: [AuthGuard], loadComponent: () => import('./integrations/integrations.page').then(m => m.IntegrationsPage) },
   {
     path: 'courses',
     canActivate: [AuthGuard],

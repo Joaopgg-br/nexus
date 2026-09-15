@@ -1,0 +1,25 @@
+<ion-content class="integration-content with-tab-bar" [fullscreen]="true">
+  <main *ngIf="moodle.estado | async as estado">
+    <a routerLink="/library" class="back"><ion-icon name="arrow-back" aria-hidden="true"></ion-icon> Minha biblioteca</a>
+    <header><span class="label">NEXUS + MOODLE</span><h1>Seu aprendizado, conectado.</h1><p>Reúna seus cursos e acompanhe sua evolução. As aulas continuam na plataforma de origem.</p></header>
+    <section class="connection-card" *ngIf="estado.configured">
+      <h2>{{ estado.connection ? 'Sua conta conectada' : 'Conectar minha conta' }}</h2>
+      <p *ngIf="estado.siteUrl">Plataforma: <strong>{{ estado.siteUrl }}</strong></p>
+      <p *ngIf="estado.connection as conexao">{{ conexao.moodle_nome || 'Conta Moodle vinculada' }}</p>
+      <form (ngSubmit)="conectar()" #form="ngForm">
+        <label for="moodle-token">{{ estado.connection ? 'Renovar chave pessoal' : 'Chave pessoal do Moodle' }}</label>
+        <input id="moodle-token" name="token" type="password" [(ngModel)]="token" required pattern="[a-fA-F0-9]{32}" minlength="32" maxlength="32" autocomplete="off" autocapitalize="none" spellcheck="false" aria-describedby="token-help" [disabled]="estado.carregando">
+        <small id="token-help">Use a chave da sua própria conta, liberada pelo administrador do Moodle. Ela será usada somente para consultar seus cursos e progresso. Não informe sua senha.</small>
+        <button type="submit" class="primary" [disabled]="form.invalid || estado.carregando">{{ estado.carregando ? 'Aguarde...' : estado.connection ? 'Renovar conexão' : 'Conectar e importar cursos' }}</button>
+      </form>
+    </section>
+    <app-cursos-externos [gerenciar]="false"></app-cursos-externos>
+    <section *ngIf="estado.connection" class="disconnect">
+      <button *ngIf="!confirmarDesconexao" type="button" class="secondary" [disabled]="estado.carregando" (click)="confirmarDesconexao = true">Desconectar Moodle</button>
+      <ng-container *ngIf="confirmarDesconexao"><p>A conexão, a chave salva e os cursos importados serão removidos do Nexus. Seus cursos no Moodle e os eventos já registrados no histórico serão preservados.</p>
+        <div class="actions"><button type="button" class="secondary" [disabled]="estado.carregando" (click)="confirmarDesconexao = false">Cancelar</button><button type="button" class="danger" [disabled]="estado.carregando" (click)="desconectar()">Confirmar desconexão</button></div>
+      </ng-container>
+    </section>
+  </main>
+</ion-content>
+<app-tab-bar></app-tab-bar>

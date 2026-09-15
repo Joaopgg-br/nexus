@@ -1,0 +1,3 @@
+[functions.moodle-sync]
+# O handler valida o JWT com auth.getUser; aceita também projetos com chaves JWT assimétricas.
+verify_jwt = false

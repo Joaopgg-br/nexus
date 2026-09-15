@@ -1,3 +1,4 @@
+import { CursosExternosComponent } from '../components/cursos-externos/cursos-externos.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -13,7 +14,8 @@ import { TabBarModule } from '../components/tab-bar/tab-bar.module';
     FormsModule,
     IonicModule,
     DashboardPageRoutingModule,
-    TabBarModule
+    TabBarModule,
+    CursosExternosComponent
   ],
   declarations: [DashboardPage]
 })

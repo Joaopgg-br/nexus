@@ -1,0 +1,29 @@
+<section class="external-section" *ngIf="moodle.estado | async as estado" aria-label="Cursos do Moodle">
+  <div class="section-heading">
+    <div><span class="eyebrow">APRENDIZAGEM CONECTADA</span><h2>Cursos do Moodle</h2></div>
+    <a *ngIf="gerenciar" routerLink="/integrations" class="manage">{{ estado.connection ? 'Gerenciar conexão' : 'Conectar Moodle' }} <ion-icon name="link-outline" aria-hidden="true"></ion-icon></a>
+  </div>
+  <p *ngIf="estado.carregando" role="status">Consultando sua integração...</p>
+  <div class="notice error" *ngIf="estado.erro" role="alert">
+    <p>{{ estado.erro }}</p><button type="button" [disabled]="estado.carregando" (click)="moodle.executar('status')">Recarregar conexão</button>
+  </div>
+  <p *ngIf="estado.mensagem" class="notice success" role="status">{{ estado.mensagem }}</p>
+  <ng-container *ngIf="estado.connection as conexao">
+    <div class="connection-line"><p>{{ conexao.site_nome }}<br><small>Última atualização: {{ conexao.sincronizado_em | date:'dd/MM/yyyy HH:mm' }}</small></p>
+      <button type="button" [disabled]="estado.carregando || !estado.configured" (click)="moodle.executar('sync')"><ion-icon name="sync-outline" aria-hidden="true"></ion-icon> Atualizar progresso</button>
+    </div>
+    <p class="notice" *ngIf="!estado.configured">A atualização está indisponível. Os dados abaixo são da última sincronização.</p>
+    <div class="external-grid">
+      <article class="external-card" *ngFor="let curso of filtrar(estado.courses)">
+        <span class="source"><ion-icon name="school-outline" aria-hidden="true"></ion-icon> Moodle</span>
+        <h3>{{ curso.titulo }}</h3>
+        <p class="summary" *ngIf="curso.resumo">{{ curso.resumo }}</p>
+        <div class="progress"><span>{{ status(curso) }}</span><progress *ngIf="curso.progresso !== null" max="100" [value]="curso.progresso" [attr.aria-label]="'Progresso em ' + curso.titulo"></progress></div>
+        <a *ngIf="moodle.urlCurso(curso) as url" [href]="url" target="_blank" rel="noopener noreferrer" (click)="moodle.registrarAcesso(curso)">Estudar no Moodle <ion-icon name="open-outline" aria-hidden="true"></ion-icon><span class="sr-only"> (abre em outra aba)</span></a>
+      </article>
+    </div>
+    <p class="notice" *ngIf="!estado.carregando && !estado.erro && estado.courses.length === 0">Nenhum curso inscrito foi encontrado nesta conta Moodle. Após se inscrever na plataforma, atualize aqui.</p>
+    <p class="notice" *ngIf="estado.courses.length > 0 && filtrar(estado.courses).length === 0">Nenhum curso do Moodle corresponde à busca.</p>
+  </ng-container>
+  <p class="notice" *ngIf="!estado.connection && !estado.carregando && !estado.erro">{{ estado.configured ? 'Conecte sua conta para reunir seus cursos e acompanhar o progresso aqui.' : 'O Moodle ainda não está disponível neste aplicativo. Os cursos do Nexus continuam disponíveis.' }}</p>
+</section>

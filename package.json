@@ -9,6 +9,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "test:learning": "node scripts/test-learning.cjs",
+    "test:moodle": "node scripts/test-moodle.cjs && node scripts/test-moodle-db.cjs",
     "lint": "ng lint"
   },
   "private": true,
@@ -44,6 +46,7 @@
     "@angular/compiler-cli": "^20.0.0",
     "@angular/language-service": "^20.0.0",
     "@capacitor/cli": "8.3.4",
+    "@electric-sql/pglite": "0.5.8",
     "@ionic/angular-toolkit": "^12.0.0",
     "@types/jasmine": "~5.1.0",
     "@typescript-eslint/eslint-plugin": "^8.18.0",
