@@ -52,7 +52,7 @@ export class CoursesPage {
   }
 
   voltar(): void {
-    void this.router.navigate(['/library']);
+    void this.router.navigate(['/dashboard']);
   }
 
   abrirAula(aula: Aula): void {

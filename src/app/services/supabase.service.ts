@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-import { AcaoMoodle, EstadoMoodle } from '../models/moodle';
-
 import { environment } from '../../environments/environment';
 
 export type TipoAtividade =
@@ -46,28 +44,6 @@ export class SupabaseService {
     );
   }
 
-  observarUsuario(callback: (usuarioId: string | null) => void) {
-    return this.supabase.auth.onAuthStateChange((_evento, sessao) => callback(sessao?.user.id ?? null)).data.subscription;
-  }
-
-  async consultarMoodle(action: AcaoMoodle, token?: string): Promise<EstadoMoodle> {
-    const { data, error } = await this.supabase.functions.invoke('moodle-sync', {
-      body: token === undefined ? { action } : { action, token }
-    });
-    if (error) {
-      const context = error.context;
-      if (context instanceof Response) {
-        const body = await context.json().catch(() => null);
-        if (body && typeof body.message === 'string') { throw new Error(body.message); }
-      }
-      throw new Error('Não foi possível acessar a integração Moodle. Tente novamente; se continuar, avise o responsável pelo aplicativo.');
-    }
-    if (!data || !Array.isArray(data.courses) || typeof data.configured !== 'boolean') {
-      throw new Error('A integração retornou uma resposta inválida. Tente novamente.');
-    }
-    return data as EstadoMoodle;
-  }
-
   login(email: string, senha: string) {
     return this.supabase.auth.signInWithPassword({
       email,
@@ -108,11 +84,11 @@ export class SupabaseService {
     });
   }
 
-  async registrarAtividade(atividade: NovaAtividade, usuarioEsperado?: string): Promise<void> {
-    return this.registrarAtividades([atividade], usuarioEsperado);
+  async registrarAtividade(atividade: NovaAtividade): Promise<void> {
+    return this.registrarAtividades([atividade]);
   }
 
-  async registrarAtividades(atividades: NovaAtividade[], usuarioEsperado?: string): Promise<void> {
+  async registrarAtividades(atividades: NovaAtividade[]): Promise<void> {
     if (atividades.length === 0) { return; }
     const { data, error } = await this.usuarioAtual();
 
@@ -122,10 +98,6 @@ export class SupabaseService {
 
     if (!data.user) {
       throw new Error('Usuário não autenticado.');
-    }
-
-    if (usuarioEsperado && data.user.id !== usuarioEsperado) {
-      throw new Error('A conta mudou durante a operação.');
     }
 
     const { error: insertError } = await this.supabase

@@ -1,7 +1,0 @@
-<ion-content class="library-content with-tab-bar" [fullscreen]="true">
-  <main><header><span>MINHA APRENDIZAGEM</span><h1>Biblioteca</h1><p>Seus cursos do Nexus e das plataformas conectadas.</p></header>
-    <label for="library-search">Buscar cursos</label><input id="library-search" type="search" [(ngModel)]="busca" placeholder="Nome do curso ou plataforma">
-    <section *ngIf="mostrarNexus" class="local-section"><h2>Cursos do Nexus</h2><a class="local-card" routerLink="/courses" (click)="registrarAcesso()"><img [src]="curso.imagem" alt=""><div><span>Nexus · {{ curso.nivel }}</span><h3>{{ curso.nome }}</h3><p>{{ curso.cargaHoraria }} · {{ curso.laboratorios }} práticas</p><strong>Estudar <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon></strong></div></a></section>
-    <app-cursos-externos [busca]="busca"></app-cursos-externos>
-  </main>
-</ion-content><app-tab-bar></app-tab-bar>
