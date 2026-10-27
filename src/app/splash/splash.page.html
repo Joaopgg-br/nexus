@@ -1,28 +1,21 @@
 <ion-content [fullscreen]="true" [scrollY]="false" class="splash">
   <div class="splash-stage" [class.leaving]="leaving">
     <div class="atmosphere" aria-hidden="true">
-      <div class="glow glow-blue"></div>
-      <div class="glow glow-purple"></div>
-      <div class="digital-grid"></div>
+      <div class="glow glow-blue"></div><div class="glow glow-purple"></div><div class="digital-grid"></div>
     </div>
-
+    <span class="splash-eyebrow">SEU PRÓXIMO PASSO EM TI</span>
     <div class="brand">
       <div class="emblem" aria-hidden="true">
-        <div class="orbit orbit-outer"></div>
-        <div class="orbit orbit-inner"></div>
-        <div class="logo-disc">
-          <ion-icon name="compass-outline"></ion-icon>
-        </div>
+        <div class="orbit orbit-outer"></div><div class="orbit orbit-inner"></div>
+        <div class="logo-disc"><img src="assets/brand/nexus-mark.svg" alt="" width="140" height="140" /></div>
       </div>
-      <h1>Nexus</h1>
+      <h1>Nexus<span>.</span></h1>
       <p class="tagline">Conhecimento que conecta.</p>
+      <span class="brand-caption">Aprenda no seu ritmo. Continue de onde parou.</span>
     </div>
-
     <div class="loading" role="status" aria-live="polite">
-      <div class="loading-dots" aria-hidden="true">
-        <span></span><span></span><span></span>
-      </div>
-      <p>Abrindo seu espaço</p>
+      <div class="loading-track" aria-hidden="true"><span></span></div>
+      <p>Abrindo seu espaço<span aria-hidden="true">...</span></p>
     </div>
   </div>
 </ion-content>

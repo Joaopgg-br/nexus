@@ -1,0 +1,86 @@
+/* Shared brand and touch feedback. Keep lesson reading surfaces still. */
+:root {
+  color-scheme: light;
+  --ion-font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --ion-color-primary: #25478f;
+  --ion-color-primary-rgb: 37, 71, 143;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #213e7e;
+  --ion-color-primary-tint: #3b599a;
+  --ion-background-color: #f3f6fb;
+  --ion-text-color: #101e35;
+  --nexus-ink: #101e35;
+  --nexus-muted: #63738c;
+  --nexus-surface: #f3f6fb;
+  --nexus-gradient: linear-gradient(120deg, #173357, #3356a1);
+}
+#nexus-app { background: var(--nexus-surface); }
+#nexus-app ion-content:is(.course-content, .activities-content, .profile-content, .lesson-content, .quiz-content, .auth-content) { --background: var(--nexus-surface); }
+#nexus-app ion-toolbar { --background: #fff; --color: var(--nexus-ink); }
+#nexus-app :is(button, .tab-item, .lesson-item, .option, .course-card) { -webkit-tap-highlight-color: transparent; transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+#nexus-app button:not(:disabled):active { transform: scale(.98); }
+#nexus-app button:disabled { transform: none; }
+#nexus-app :is(input, select, textarea, ion-input) { font-size: 16px; }
+#nexus-app :is(.btn-primary, .start-course-btn, .complete-btn, .check-btn, .save-button) { min-height: 52px; color: #fff; background: var(--nexus-gradient); box-shadow: 0 8px 20px #25478f26; }
+#nexus-app :is(.form-group label, .account-heading h1, .activities-header h1, .lesson-title, .course-title) { color: var(--nexus-ink); }
+#nexus-app :is(.course-description, .lesson-text, .activity-info p, .activity-date, .activities-header p) { color: var(--nexus-muted); }
+#nexus-app :is(.activity-item, .lesson-item, .question-card, .practice-card) { border: 1px solid #e0e7f0; box-shadow: 0 4px 16px #10253e04; }
+#nexus-app .activity-type { color: #087e85; }
+#nexus-app .activity-icon { background: #e6f5f4; }
+#nexus-app .activity-icon ion-icon { color: #087e85; }
+#nexus-app .lesson-item:disabled { opacity: .6; }
+#nexus-app .lesson-item .lesson-info p { color: #63738c; }
+#nexus-app .course-header.tema-azul { background: var(--nexus-gradient); height: clamp(190px, 30vh, 280px); }
+#nexus-app .course-#nexus-app { padding-bottom: 32px; }
+#nexus-app .course-info-chips { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+#nexus-app .course-info-chips .info-chip { flex-direction: row; justify-content: center; padding: 13px 8px; background: #f3f6fb; }
+#nexus-app .course-info-chips .info-chip span { font-size: 11px; }
+#nexus-app .lesson-header { background: #ffffffed; border-bottom: 1px solid #e0e7f0; }
+#nexus-app .lesson-#nexus-app { margin-top: 16px; border-radius: 24px; }
+#nexus-app .lesson-text { font-size: 16px; line-height: 1.8; }
+#nexus-app .lesson-#nexus-app .lesson-title { font-size: clamp(24px, 6vw, 32px); letter-spacing: -.5px; }
+#nexus-app .practice-card { background: #fbfcff; border-radius: 20px; }
+#nexus-app .choice:has(input:checked) { border-color: #087e85; background: #edf9f7; }
+#nexus-app .profile-avatar-top { padding: 32px 0 22px; background: radial-gradient(ellipse at top, #ddf3f3, transparent 75%); }
+#nexus-app .profile-avatar-top img { width: 92px; height: 92px; border: 4px solid #fff; box-shadow: 0 8px 30px #10253e1a; }
+#nexus-app .profile-card { border: 1px solid #e0e7f0; box-shadow: none; }
+#nexus-app .profile-input { border: 1px solid #dce4ef; background: #f8faff; min-height: 52px; }
+#nexus-app .form-group small { color: #63738c; }
+#nexus-app .logout-button { min-height: 48px; }
+#nexus-app .auth-wrapper { background: var(--nexus-surface); }
+#nexus-app .auth-logo { height: 300px; background: radial-gradient(ellipse at 100% 0, #206e783d, transparent 60%), #101e35; border-radius: 0 0 36px 36px; }
+#nexus-app .logo-icon { background: transparent; border-radius: 22px; width: 68px; height: 68px; overflow: hidden; box-shadow: 0 0 0 5px #ffffff08; img { width: 100%; height: 100%; } }
+#nexus-app .logo-text { font: 750 32px/1.2 var(--ion-font-family); color: #fff; letter-spacing: -1px; }
+#nexus-app .auth-tagline { margin: 8px 0 0; font-size: 12px; color: #bdcbe0; }
+#nexus-app .auth-toggle { bottom: 28px; height: 50px; box-shadow: none; background: #ffffff12; border: 1px solid #ffffff12; }
+#nexus-app .toggle-slider, #nexus-app .toggle-slider.register { background: #5de6d6; }
+#nexus-app .auth-toggle .toggle-btn { color: #dce8f4; }
+#nexus-app .auth-toggle:has(.toggle-slider:not(.register)) .toggle-btn:first-of-type,
+#nexus-app .auth-toggle:has(.toggle-slider.register) .toggle-btn:last-of-type { color: #10253e; }
+#nexus-app .auth-form-container { padding-top: 28px; }
+#nexus-app .auth-input { --background: #fff; --color: #101e35; --placeholder-color: #687b91; border: 1px solid #dce4ef; }
+#nexus-app .auth-footer-link::before { content: 'ou'; }
+#nexus-app .auth-footer-link button { padding: 14px 24px; border-radius: 14px; background: white; color: #25478f; min-height: 48px; border: 1px solid #dce4ef; }
+#nexus-app .btn-link { min-height: 44px; }
+#nexus-app .tab-bar { border: 1px solid #dce4ef; background: #fffffff5; box-shadow: 0 8px 30px #10253e12; padding: 6px 10px; }
+#nexus-app .tab-item { min-width: 52px; min-height: 48px; flex-direction: column; gap: 2px; }
+#nexus-app .tab-icon-wrap { width: 42px; height: 31px; border-radius: 12px; }
+#nexus-app .tab-active .tab-icon-wrap { background: #e6f5f4; }
+#nexus-app .tab-active .tab-icon-wrap ion-icon { color: #087e85; }
+#nexus-app .tab-label { color: #63738c; font-size: 9px; font-weight: 600; }
+#nexus-app .tab-active .tab-label { color: #087e85; }
+#nexus-app .quiz-header h1 { font-size: clamp(24px, 6vw, 32px); letter-spacing: -.7px; }
+#nexus-app .progress-fill { background: linear-gradient(90deg, #087e85, #4b6ed0); }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  #nexus-app :is(.course-card, .lesson-item:not(:disabled), .activity-item):hover { transform: translateY(-3px); box-shadow: 0 10px 24px #10253e12; }
+}
+@media (min-width: 768px) {
+  #nexus-app .course-info-chips { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  #nexus-app .auth-wrapper { max-width: 560px; margin-inline: auto; }
+  #nexus-app .profile-card { border-radius: 28px; }
+}
+@media (max-width: 380px) { #nexus-app .tab-bar { left: 10px; right: 10px; } #nexus-app .quiz-container { padding-inline: 16px; } }
+@media (prefers-reduced-motion: reduce) {
+  #nexus-app *, #nexus-app *::before, #nexus-app *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

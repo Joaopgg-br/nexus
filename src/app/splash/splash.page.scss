@@ -1,161 +1,37 @@
-.splash { --background: linear-gradient(135deg, #15c4f4 0%, #6e42ff 100%); }
-
+.splash { --background: #081225; }
 .splash-stage {
-  position: relative;
-  isolation: isolate;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
-  padding: max(28px, env(safe-area-inset-top)) 24px max(32px, env(safe-area-inset-bottom));
-  overflow: hidden;
-  color: #fff;
-  text-align: center;
-  background: linear-gradient(135deg, #15c4f4 0%, #6e42ff 100%);
+  position: relative; isolation: isolate; display: flex; flex-direction: column;
+  align-items: center; justify-content: space-between; height: 100%;
+  padding: calc(30px + env(safe-area-inset-top, 0px)) 22px calc(28px + env(safe-area-inset-bottom, 0px));
+  overflow: hidden; color: #fff; text-align: center;
+  background: radial-gradient(ellipse at 15% 10%, #12445b70, transparent 55%), #081225;
   transition: opacity .3s ease-in, transform .3s ease-in;
-
-  &.leaving { opacity: 0; transform: scale(1.025); }
+  &.leaving { opacity: 0; transform: scale(1.035); }
 }
-
 .atmosphere { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
-.glow {
-  position: absolute;
-  width: min(100vw, 650px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  animation: drift 7s ease-in-out infinite alternate;
-}
-.glow-blue {
-  top: -15%; left: -35%;
-  background: radial-gradient(circle, #ffffff20, transparent 68%);
-}
-.glow-purple {
-  right: -35%; bottom: -20%;
-  background: radial-gradient(circle, #6e42ff28, transparent 68%);
-  animation-delay: -3s;
-}
-.digital-grid {
-  position: absolute;
-  inset: 0;
-  opacity: .2;
-  background-image: radial-gradient(#fff 1px, transparent 1px);
-  background-size: 32px 32px;
-  mask-image: radial-gradient(ellipse, #000, transparent 70%);
-}
-
+.glow { position: absolute; width: min(100vw, 600px); aspect-ratio: 1; border-radius: 50%; animation: drift 8s ease-in-out infinite alternate; }
+.glow-blue { top: -22%; left: -45%; background: radial-gradient(circle, #32d7cf30, transparent 68%); }
+.glow-purple { right: -45%; bottom: -22%; background: radial-gradient(circle, #8365f82b, transparent 68%); animation-delay: -4s; }
+.digital-grid { position: absolute; inset: 0; opacity: .12; background-image: radial-gradient(#8ed9e8 1px, transparent 1px); background-size: 28px 28px; mask-image: radial-gradient(ellipse, #000, transparent 70%); }
+.splash-eyebrow { color: #79c9d4; font-size: 10px; letter-spacing: 2.6px; font-weight: 700; }
 .brand { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-.emblem {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 240px;
-  height: 240px;
-  margin: 0 auto 24px;
-  animation: reveal 1s cubic-bezier(.16, 1, .3, 1) .1s both;
-}
-.orbit {
-  position: absolute;
-  border: 1px solid #ffffff30;
-  border-radius: 50%;
-  animation: orbit 14s linear infinite;
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 14%; left: 14%;
-    width: 5px; height: 5px;
-    border-radius: 50%;
-    background: #fff;
-    box-shadow: 0 0 12px #ffffff70;
-  }
+.emblem { position: relative; display: grid; place-items: center; width: clamp(190px, 55vw, 250px); aspect-ratio: 1; margin: 0 auto 26px; animation: reveal .85s cubic-bezier(.16,1,.3,1) both; }
+.orbit { position: absolute; border: 1px solid #5de6d62e; border-radius: 50%; animation: orbit 16s linear infinite;
+  &::after { content: ''; position: absolute; top: 14%; left: 14%; width: 7px; height: 7px; border-radius: 50%; background: #5de6d6; box-shadow: 0 0 14px #5de6d680; }
 }
 .orbit-outer { inset: 0; border-style: dashed; }
-.orbit-inner { inset: 22px; animation-direction: reverse; }
-.logo-disc {
-  display: grid;
-  place-items: center;
-  width: 140px;
-  height: 140px;
-  border: 1px solid #ffffff40;
-  border-radius: 50%;
-  background: #fff;
-  color: #6e42ff;
-  box-shadow: 0 0 0 10px #ffffff10, 0 16px 40px #4936a52e;
-  animation: breathe 3s ease-in-out infinite;
-
-  ion-icon {
-    font-size: 82px;
-    animation: compass 1.35s cubic-bezier(.22, 1, .36, 1) .15s both;
-  }
-}
-
-h1 {
-  margin: 0;
-  font-size: clamp(52px, 13vw, 68px);
-  line-height: 1.1;
-  letter-spacing: -2px;
-  font-weight: 700;
-  text-shadow: 0 4px 30px #4b32ae25;
-  animation: reveal .85s cubic-bezier(.16, 1, .3, 1) .35s both;
-}
-.tagline {
-  margin: 18px 0 0;
-  font-size: 14px;
-  letter-spacing: .8px;
-  color: #fff;
-  animation: reveal .8s ease-out .6s both;
-}
-.loading {
-  flex-shrink: 0;
-  margin-top: 24px;
-  animation: reveal .7s ease-out .8s both;
-
-  p { margin: 16px 0 0; font-size: 11px; letter-spacing: 1px; color: #fff; }
-}
-.loading-dots {
-  display: flex;
-  justify-content: center;
-  gap: 7px;
-
-  span {
-    width: 5px; height: 5px;
-    border-radius: 50%;
-    background: #fff;
-    animation: pulse 1.2s ease-in-out infinite;
-    &:nth-child(2) { animation-delay: .15s; }
-    &:nth-child(3) { animation-delay: .3s; }
-  }
-}
-
-@keyframes reveal {
-  from { opacity: 0; transform: translateY(18px) scale(.94); }
-  to { opacity: 1; transform: none; }
-}
-@keyframes compass {
-  from { opacity: 0; transform: rotate(-65deg) scale(.8); }
-  to { opacity: 1; transform: rotate(0) scale(1); }
-}
+.orbit-inner { inset: 20px; animation-direction: reverse; animation-duration: 12s; &::after { background: #9c87ff; } }
+.logo-disc { width: 57%; aspect-ratio: 1; border-radius: 32%; overflow: hidden; box-shadow: 0 0 0 10px #ffffff04, 0 20px 60px #0005; animation: breathe 3s ease-in-out infinite; img { display: block; width: 100%; height: 100%; } }
+h1 { margin: 0; font-size: clamp(54px, 14vw, 72px); line-height: 1.1; letter-spacing: -3px; font-weight: 800; animation: reveal .8s .2s both; span { color: #5de6d6; } }
+.tagline { margin: 14px 0 0; font-size: 16px; color: #e3edf8; animation: reveal .8s .35s both; }
+.brand-caption { margin-top: 12px; max-width: 270px; color: #91a6c2; font-size: 12px; line-height: 1.6; animation: reveal .8s .45s both; }
+.loading { width: min(180px, 60vw); p { margin: 16px 0 0; font-size: 11px; color: #91a6c2; } }
+.loading-track { height: 3px; overflow: hidden; border-radius: 4px; background: #ffffff10; span { display: block; height: 100%; width: 45%; background: linear-gradient(90deg, #5de6d6, #9c87ff); border-radius: inherit; animation: loading 1.3s ease-in-out infinite; } }
+@keyframes reveal { from { opacity: 0; transform: translateY(16px) scale(.96); } to { opacity: 1; transform: none; } }
 @keyframes orbit { to { transform: rotate(360deg); } }
-@keyframes breathe { 50% { transform: scale(1.035); } }
-@keyframes drift { to { transform: translate(12%, -8%) scale(1.15); } }
-@keyframes pulse { 50% { opacity: .3; transform: translateY(-4px); } }
-
-@media (max-height: 560px) {
-  .emblem { width: 170px; height: 170px; margin-bottom: 16px; }
-  .logo-disc { width: 106px; height: 106px; }
-  .logo-disc ion-icon { font-size: 64px; }
-  h1 { font-size: 48px; }
-  .tagline { margin-top: 10px; }
-}
-@media (max-height: 390px) {
-  .emblem { width: 112px; height: 112px; margin-bottom: 8px; }
-  .orbit-inner { inset: 10px; }
-  .logo-disc { width: 76px; height: 76px; }
-  .logo-disc ion-icon { font-size: 46px; }
-  h1 { font-size: 36px; }
-  .loading { margin-top: 12px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .splash-stage, .splash-stage * { animation: none; transition: none; }
-  .splash-stage.leaving { transform: none; }
-}
+@keyframes breathe { 50% { transform: translateY(-5px); } }
+@keyframes drift { to { transform: translate(10%, -8%) scale(1.12); } }
+@keyframes loading { from { transform: translateX(-110%); } to { transform: translateX(325%); } }
+@media (max-height: 600px) { .emblem { width: 154px; margin-bottom: 16px; } h1 { font-size: 48px; } .brand-caption { margin-top: 8px; } }
+@media (max-height: 420px) { .splash-eyebrow, .brand-caption { display: none; } .emblem { width: 96px; margin-bottom: 10px; } h1 { font-size: 36px; } .tagline { font-size: 12px; margin-top: 8px; } .loading { margin-top: 12px; } }
+@media (prefers-reduced-motion: reduce) { .splash-stage, .splash-stage * { animation: none; transition: none; } .splash-stage.leaving { transform: none; } .loading-track span { width: 100%; } }

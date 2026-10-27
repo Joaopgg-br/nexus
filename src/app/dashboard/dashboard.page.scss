@@ -1,208 +1,28 @@
-// home.page.scss
-
-:host {
-  --purple: #7B2FF7;
-  --blue: #4A6CF7;
-  --gradient: linear-gradient(135deg, var(--blue), var(--purple));
-}
-
-.dashboard-content {
-  --background: #ffffff;
-  --padding-start: max(20px, env(safe-area-inset-left, 0px));
-  --padding-end: max(20px, env(safe-area-inset-right, 0px));
-  --padding-top: calc(12px + env(safe-area-inset-top, 0px));
-
-}
-
-/* ===== HEADER ===== */
-.dashboard-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-
-  .greeting {
-    .greeting-text {
-      font-size: 15px;
-      font-weight: 400;
-      color: #9a9a9a;
-      margin: 0 0 2px 0;
-    }
-    .greeting-name {
-      font-size: 26px;
-      font-weight: 800;
-      margin: 0;
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-  }
-
-  .avatar {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 2px solid #f0f0f0;
-    flex-shrink: 0;
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  }
-}
-
-/* ===== PARCEIROS (carrossel infinito) ===== */
-.partners-wrapper {
-  overflow: hidden;
-  width: 100%;
-  margin-bottom: 24px;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
-}
-
-.partners-track {
-  display: flex;
-  align-items: center;
-  gap: 32px;
-  width: max-content;
-  animation: scrollPartners 18s linear infinite;
-
-  img {
-    height: 22px;
-    width: auto;
-    object-fit: contain;
-    opacity: 0.55;
-    filter: grayscale(100%);
-    flex-shrink: 0;
-  }
-}
-
-@keyframes scrollPartners {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-/* ===== CURSOS (scroll horizontal) ===== */
-.courses-section {
-  margin-bottom: 24px;
-}
-
-.courses-scroll {
-  display: flex;
-  gap: 14px;
-  overflow-x: auto;
-  scroll-snap-type: x proximity;
-  padding-bottom: 4px;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-.course-card {
-  flex: 0 0 auto;
-  width: 150px;
-  margin: 0;
-  border-radius: 18px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-  scroll-snap-align: start;
-  overflow: hidden;
-
-  .course-thumbnail {
-    position: relative;
-    height: 90px;
-    width: 100%;
-    overflow: hidden;
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .course-duration {
-      position: absolute;
-      bottom: 8px;
-      right: 8px;
-      background: rgba(0, 0, 0, 0.55);
-      color: #fff;
-      font-size: 10px;
-      font-weight: 600;
-      padding: 3px 8px;
-      border-radius: 20px;
-      backdrop-filter: blur(4px);
-    }
-  }
-
-  &.thumb-orange .course-thumbnail { background: #FFB067; }
-  &.thumb-blue .course-thumbnail   { background: #6EC6FF; }
-  &.thumb-yellow .course-thumbnail { background: #FFE066; }
-  &.thumb-purple .course-thumbnail { background: #C79CFF; }
-  &.thumb-dark .course-thumbnail   { background: #3A3A4A; }
-  &.thumb-teal .course-thumbnail   { background: #66D9C9; }
-
-  ion-card-content {
-    padding: 10px 12px 14px;
-
-    .course-category {
-      font-size: 11px;
-      color: #a3a3a3;
-      margin: 0 0 4px 0;
-      text-transform: capitalize;
-    }
-
-    .course-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: #1a1a1a;
-      margin: 0;
-      line-height: 1.3;
-    }
-  }
-}
-
-/* ===== BUSCA ===== */
-.search-section {
-  margin-bottom: 20px;
-}
-
-.search-bar {
-  display: flex;
-  align-items: center;
-  background: #F5F5F9;
-  border-radius: 16px;
-  padding: 12px 16px;
-
-  .search-icon {
-    font-size: 20px;
-    color: #a3a3a3;
-    margin-right: 10px;
-  }
-
-  .search-input {
-    border: none;
-    background: transparent;
-    outline: none;
-    width: 100%;
-    font-size: 14px;
-    color: #1a1a1a;
-
-    &::placeholder {
-      color: #b0b0b0;
-    }
-  }
-}
-
-.course-thumbnail.thumb-cyber {
-  background: linear-gradient(135deg, #4338ca, #2563eb);
-}
-
-.dashboard-header .avatar {
-  padding: 0;
-  background: transparent;
-  cursor: pointer;
-}
+.dashboard-content { --background: #f3f6fb; }
+.dashboard-header { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin: 14px 0 24px; }
+.greeting-text { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; color: #63738c; margin: 0 0 6px; }
+.greeting-name { font-size: 30px; font-weight: 800; letter-spacing: -1px; color: #101e35; margin: 0; span { color: #087e85; } }
+.avatar { width: 48px; height: 48px; border-radius: 17px; padding: 3px; border: 1px solid #dce4ef; background: white; flex-shrink: 0; img { width: 100%; height: 100%; border-radius: 13px; object-fit: cover; } }
+.learning-hero { display: flex; align-items: center; position: relative; isolation: isolate; overflow: hidden; border-radius: 26px; margin-bottom: 28px; padding: 28px 24px; min-height: 230px; color: #fff; background: radial-gradient(ellipse at 100% 0, #227d923d, transparent 65%), #101e35; box-shadow: 0 14px 32px #152f4f1f; }
+.hero-copy { position: relative; z-index: 1; max-width: 85%; }
+.hero-label { color: #5de6d6; font-size: 9px; letter-spacing: 1.3px; font-weight: 700; }
+.hero-copy h2 { font-size: clamp(23px, 5vw, 32px); line-height: 1.2; letter-spacing: -.7px; margin: 14px 0 10px; font-weight: 750; }
+.hero-copy p { color: #b9c8dd; font-size: 12px; margin: 0 0 22px; }
+.hero-copy button { display: inline-flex; align-items: center; gap: 14px; min-height: 44px; border-radius: 14px; padding: 12px 16px; background: #5de6d6; color: #10253e; font-size: 12px; font-weight: 750; }
+.hero-mark { position: absolute; right: -22px; top: 58px; width: 130px; height: 130px; border-radius: 36px; opacity: .2; transform: rotate(-14deg); }
+.search-section { margin-bottom: 26px; }
+.search-bar { display: flex; align-items: center; gap: 12px; background: white; border: 1px solid #dce4ef; border-radius: 16px; min-height: 54px; padding: 10px 16px; &:focus-within { border-color: #087e85; box-shadow: 0 0 0 3px #087e8510; } }
+.search-icon { font-size: 21px; color: #63738c; }
+.search-input { width: 100%; min-width: 0; border: 0; background: transparent; color: #101e35; font-size: 16px; outline: 0; &::placeholder { color: #728099; font-size: 13px; } }
+.section-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; h2 { margin: 0; color: #101e35; font-size: 17px; font-weight: 750; } span { flex-shrink: 0; color: #63738c; font-size: 11px; } }
+.courses-scroll { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 18px; }
+.course-card { border: 1px solid #e0e6ef; width: 100%; max-width: 480px; border-radius: 22px; background: #fff; padding: 0; text-align: left; overflow: hidden; box-shadow: 0 5px 18px #10253e05; }
+.course-thumbnail { height: 156px; position: relative; background: #152744; img { width: 100%; height: 100%; object-fit: cover; opacity: .9; } }
+.course-duration { position: absolute; bottom: 12px; right: 12px; display: flex; align-items: center; gap: 5px; padding: 6px 10px; background: #081225d9; color: #fff; border-radius: 10px; font-size: 11px; }
+.course-card-body { padding: 20px; p { margin: 9px 0 18px; font-size: 12px; color: #63738c; } }
+.course-category { color: #087e85; font-size: 10px; font-weight: 750; text-transform: uppercase; letter-spacing: 1px; }
+.course-title { color: #101e35; font-size: 20px; font-weight: 750; line-height: 1.3; margin: 8px 0 0; }
+.course-cta { display: flex; justify-content: space-between; color: #25478f; font-size: 12px; font-weight: 700; }
+.dashboard-note { display: flex; justify-content: center; align-items: center; gap: 8px; margin: 24px 0; color: #63738c; font-size: 11px; }
+.empty-state { color: #63738c; padding: 22px 0; line-height: 1.6; }
+@media (min-width: 768px) { .hero-mark { right: 50px; width: 180px; height: 180px; opacity: .65; top: 26px; } .hero-copy { max-width: 65%; } }

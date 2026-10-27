@@ -9,10 +9,11 @@
     <div class="auth-logo">
 
       <div class="logo-icon">
-        <ion-icon name="compass-outline"></ion-icon>
+        <img src="assets/brand/nexus-mark.svg" alt="" width="64" height="64" />
       </div>
 
       <span class="logo-text">Nexus</span>
+      <p class="auth-tagline">Seu próximo passo começa aqui.</p>
 
       <!-- TOGGLE LOGIN / REGISTRO -->
       <div class="auth-toggle">
@@ -67,7 +68,7 @@
 
           <label>Email</label>
 
-          <ion-input
+            <ion-input aria-label="E-mail" autocomplete="email" inputmode="email"
             formControlName="email"
             type="email"
             placeholder="Coloque seu email"
@@ -144,7 +145,7 @@
 
           <label>Senha</label>
 
-          <ion-input
+          <ion-input aria-label="Senha" autocomplete="current-password"
             formControlName="password"
             type="password"
             placeholder="Coloque sua senha"
@@ -257,7 +258,7 @@
 
         <label>Nome</label>
 
-        <ion-input
+        <ion-input aria-label="Nome" autocomplete="name"
           formControlName="name"
           type="text"
           placeholder="Coloque seu nome"
@@ -285,7 +286,7 @@
 
         <label>Email</label>
 
-        <ion-input
+        <ion-input aria-label="E-mail" autocomplete="email" inputmode="email"
           formControlName="email"
           type="email"
           placeholder="Coloque seu email"
@@ -322,7 +323,7 @@
 
         <label>Senha</label>
 
-        <ion-input
+        <ion-input aria-label="Senha" autocomplete="new-password"
           formControlName="password"
           type="password"
           placeholder="Coloque sua senha"
@@ -402,12 +403,12 @@
 
       <div class="auth-footer-link">
 
-        <span
+        <button type="button"
           (click)="setMode('login')">
 
           Já possui login?
 
-        </span>
+        </button>
 
       </div>
 
