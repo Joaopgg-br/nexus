@@ -1,112 +1,49 @@
-<ion-content
-  [fullscreen]="true"
-  [scrollY]="true"
-  [scrollX]="false"
-  class="dashboard-content with-tab-bar"
->
-  <div class="dashboard-header">
+<ion-content [fullscreen]="true" class="dashboard-content with-tab-bar">
+  <header class="dashboard-header">
     <div class="greeting">
-      <h2 class="greeting-text">Olá 👋</h2>
-      <h1
-        class="greeting-name"
-        *ngIf="nomeUsuario"
-      >
-        {{ nomeUsuario }}
-      </h1>
+      <p class="greeting-text">BOM TE VER POR AQUI</p>
+      <h1 class="greeting-name">Olá{{ nomeUsuario ? ', ' + nomeUsuario.split(' ')[0] : '' }}<span>.</span></h1>
     </div>
-
-    <button
-      type="button"
-      class="avatar"
-      (click)="abrirPerfil()"
-      aria-label="Abrir perfil"
-    >
-      <img
-        [src]="fotoPerfil"
-        (error)="usarAvatarPadrao()"
-        alt="Avatar do usuário"
-      />
+    <button type="button" class="avatar" (click)="abrirPerfil()" aria-label="Abrir perfil">
+      <img [src]="fotoPerfil" (error)="usarAvatarPadrao()" alt="Avatar do usuário" />
     </button>
-  </div>
+  </header>
 
-  <div class="search-section">
+  <section class="learning-hero" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <span class="hero-label">CONECTE SEU PRÓXIMO PASSO</span>
+      <h2 id="hero-title">Seu futuro em TI<br />começa com você.</h2>
+      <p>Conhecimento na prática, no seu ritmo.</p>
+      <button type="button" (click)="abrirCurso(cursos[0])">Explorar curso <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon></button>
+    </div>
+    <img class="hero-mark" src="assets/brand/nexus-mark.svg" alt="" aria-hidden="true" width="120" height="120" />
+  </section>
+
+  <section class="search-section" aria-label="Pesquisa de cursos">
     <div class="search-bar">
-      <ion-icon
-        name="search-outline"
-        class="search-icon"
-      ></ion-icon>
-      <input
-        type="text"
-        placeholder="Buscar curso ou categoria"
-        class="search-input"
-        [(ngModel)]="termoBusca"
-      />
+      <ion-icon name="search-outline" class="search-icon" aria-hidden="true"></ion-icon>
+      <input type="search" placeholder="O que você quer aprender?" aria-label="Buscar curso ou categoria" class="search-input" [(ngModel)]="termoBusca" />
     </div>
-  </div>
+  </section>
 
-  <div class="partners-wrapper">
-    <div class="partners-track">
-      <img src="assets/microsoft.png" alt="Microsoft" />
-      <img src="assets/google.png" alt="Google" />
-      <img src="assets/adobe.png" alt="Adobe" />
-      <img src="assets/senai.png" alt="SENAI" />
-      <img src="assets/sesi.jpg" alt="SESI" />
-      <img src="assets/microsoft.png" alt="Microsoft" />
-      <img src="assets/google.png" alt="Google" />
-      <img src="assets/adobe.png" alt="Adobe" />
-      <img src="assets/senai.png" alt="SENAI" />
-      <img src="assets/sesi.jpg" alt="SESI" />
-    </div>
-  </div>
-
-  <div class="courses-section">
-    <div
-      class="courses-scroll"
-      (touchstart)="$event.stopPropagation()"
-      (mousedown)="$event.stopPropagation()"
-    >
-      <ion-card
-        class="course-card"
-        role="button" tabindex="0"
-        (keydown.enter)="abrirCurso(curso)"
-        (keydown.space)="$event.preventDefault(); abrirCurso(curso)"
-        *ngFor="let curso of cursosFiltrados"
-        (click)="abrirCurso(curso)"
-      >
-        <div
-          class="course-thumbnail"
-          [ngClass]="curso.corThumb"
-        >
-          <img
-            [src]="curso.imagem"
-            [alt]="curso.titulo"
-          />
-          <div
-            class="course-duration"
-            *ngIf="curso.duracao"
-          >
-            {{ curso.duracao }}
-          </div>
+  <section class="courses-section" aria-labelledby="courses-title">
+    <div class="section-heading"><h2 id="courses-title">Seu próximo aprendizado</h2><span>{{ cursosFiltrados.length }} curso</span></div>
+    <div class="courses-scroll">
+      <button type="button" class="course-card" *ngFor="let curso of cursosFiltrados" (click)="abrirCurso(curso)">
+        <div class="course-thumbnail" [ngClass]="curso.corThumb">
+          <img [src]="curso.imagem" [alt]="curso.titulo" />
+          <span class="course-duration" *ngIf="curso.duracao"><ion-icon name="time-outline" aria-hidden="true"></ion-icon>{{ curso.duracao }}</span>
         </div>
-
-        <ion-card-content>
-          <p class="course-category">
-            {{ curso.categoria }}
-          </p>
-          <h3 class="course-title">
-            {{ curso.titulo }}
-          </h3>
-        </ion-card-content>
-      </ion-card>
-
-      <p
-        class="empty-state"
-        *ngIf="cursosFiltrados.length === 0"
-      >
-        Nenhum curso encontrado.
-      </p>
+        <div class="course-card-body">
+          <span class="course-category">{{ curso.categoria }}</span>
+          <h3 class="course-title">{{ curso.titulo }}</h3>
+          <p>5 capítulos com práticas guiadas</p>
+          <span class="course-cta">Conhecer curso <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon></span>
+        </div>
+      </button>
+      <p class="empty-state" *ngIf="cursosFiltrados.length === 0" role="status">Nenhum curso encontrado. Tente outro termo.</p>
     </div>
-  </div>
+  </section>
+  <p class="dashboard-note"><ion-icon name="sparkles-outline" aria-hidden="true"></ion-icon> Um passo de cada vez. Cada prática conta.</p>
 </ion-content>
-
 <app-tab-bar></app-tab-bar>

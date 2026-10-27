@@ -30,13 +30,14 @@ export class SplashPage implements OnInit, OnDestroy {
       // Login remains available when the saved session cannot be restored.
     });
 
-    // 2.3 seconds for the entrance, then 300 ms for the exit fade.
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Reduced-motion users can reach the account screen sooner.
     this.timer = setTimeout(() => {
       this.leaving = true;
       this.timer = setTimeout(() => {
         void this.router.navigateByUrl(this.destination, { replaceUrl: true });
       }, 300);
-    }, 2300);
+    }, reducedMotion ? 500 : 2300);
   }
 
   ngOnDestroy(): void {
